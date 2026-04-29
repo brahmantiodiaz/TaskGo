@@ -89,8 +89,6 @@ DB_DIALECT=postgres
 SESSION_SECRET=your_session_secret
 ```
 
-> Catatan: jangan upload file `.env` ke repository public. Gunakan `.env.example` sebagai contoh konfigurasi.
-
 ---
 
 ## Menjalankan Database
