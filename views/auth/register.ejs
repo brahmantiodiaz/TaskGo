@@ -1,0 +1,55 @@
+<div class="card w-full max-w-md bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h1 class="text-2xl font-bold text-center">Register</h1>
+    <p class="text-center text-base-content/60 mb-4">
+      Daftar sebagai buyer
+    </p>
+
+    <form action="/register" method="POST" class="space-y-4">
+      <div>
+        <label class="label">
+          <span class="label-text">Username</span>
+        </label>
+        <input type="text" name="username" class="input input-bordered w-full <%= error?.message?.username ? 'input-error' : '' %>" placeholder="your username" />
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.username || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Email</span>
+        </label>
+        <input type="text" name="email" class="input input-bordered w-full <%= error?.message?.email ? 'input-error' : '' %>" placeholder="user@mail.com" />
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.email || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Password</span>
+        </label>
+        <input type="password" name="password" class="input input-bordered w-full <%= error?.message?.password ? 'input-error' : '' %>" placeholder="minimum 8 characters" />
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.password || '' %>
+          </span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-full">
+        Register
+      </button>
+    </form>
+
+    <p class="text-center text-sm mt-4">
+      Sudah punya akun?
+      <a href="/login" class="link link-primary">Login</a>
+    </p>
+  </div>
+</div>

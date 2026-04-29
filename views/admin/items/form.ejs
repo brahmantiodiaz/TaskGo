@@ -1,0 +1,92 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold"><%= title %></h1>
+  <p class="text-base-content/60">
+    <%= isEdit ? 'Update item data.' : 'Create new service category.' %>
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow max-w-3xl">
+  <div class="card-body">
+    <% if (error?.message?.global) { %>
+    <div class="alert alert-error mb-4">
+      <span><%= error.message.global %></span>
+    </div>
+    <% } %>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+      <div>
+        <label class="label">
+          <span class="label-text">Name</span>
+        </label>
+
+        <input type="text" name="name" value="<%= detail?.name || '' %>" class="input input-bordered w-full <%= error?.message?.name ? 'input-error' : '' %>" placeholder="Cleaning Service" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.name || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Description</span>
+        </label>
+
+        <textarea name="description" rows="4" class="textarea textarea-bordered w-full <%= error?.message?.description ? 'textarea-error' : '' %>" placeholder="Describe this item..."><%= detail?.description || '' %></textarea>
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.description || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Image URL</span>
+        </label>
+
+        <input type="text" name="imageUrl" value="<%= detail?.imageUrl || '' %>" class="input input-bordered w-full <%= error?.message?.imageUrl ? 'input-error' : '' %>" placeholder="https://example.com/image.jpg" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.imageUrl || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Status</span>
+        </label>
+
+        <% const selectedStatus = detail?.status || 'active'; %>
+
+        <select name="status" class="select select-bordered w-full <%= error?.message?.status ? 'select-error' : '' %>">
+          <% itemStatuses.forEach((status) => { %>
+          <option value="<%= status %>" <%= selectedStatus === status ? 'selected' : '' %>>
+            <%= status %>
+          </option>
+          <% }) %>
+        </select>
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.status || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <%= isEdit ? 'Update Item' : 'Create Item' %>
+        </button>
+
+        <a href="/admin/items" class="btn btn-ghost">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

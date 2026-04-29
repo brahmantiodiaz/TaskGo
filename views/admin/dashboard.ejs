@@ -1,0 +1,88 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Admin Dashboard</h1>
+  <p class="text-base-content/60">
+    Ringkasan data transaksi dan master data TaskGo.
+  </p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Total Users</div>
+      <div class="stat-value"><%= totalUsers %></div>
+      <div class="stat-desc">Registered users</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Total Items</div>
+      <div class="stat-value"><%= totalItems %></div>
+      <div class="stat-desc">Service categories</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Total Invoices</div>
+      <div class="stat-value"><%= totalInvoices %></div>
+      <div class="stat-desc">All invoice records</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Paid Invoices</div>
+      <div class="stat-value"><%= paidInvoices %></div>
+      <div class="stat-desc">Invoice status paid</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Revenue</div>
+      <div class="stat-value text-primary text-2xl">
+        Rp<%= new Intl.NumberFormat("id-ID").format(totalRevenue) %>
+      </div>
+      <div class="stat-desc">From paid invoices</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Manage Items</h2>
+      <p class="text-base-content/70">
+        Kelola kategori jasa seperti cleaning service, pet care, home repair, dan lainnya.
+      </p>
+      <div class="card-actions justify-end">
+        <a href="/admin/items" class="btn btn-primary btn-sm">Open Items</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Manage Users</h2>
+      <p class="text-base-content/70">
+        Kelola akun buyer, seller, dan admin.
+      </p>
+      <div class="card-actions justify-end">
+        <a href="/admin/users" class="btn btn-primary btn-sm">Open Users</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">View Invoices</h2>
+      <p class="text-base-content/70">
+        Lihat daftar invoice dan detail transaksi.
+      </p>
+      <div class="card-actions justify-end">
+        <a href="/admin/invoices" class="btn btn-primary btn-sm">Open Invoices</a>
+      </div>
+    </div>
+  </div>
+</div>

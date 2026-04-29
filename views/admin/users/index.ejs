@@ -1,0 +1,114 @@
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-3xl font-bold">Manage Users</h1>
+    <p class="text-base-content/60">
+      Kelola akun admin, seller, dan buyer.
+    </p>
+  </div>
+
+  <a href="/admin/users/add" class="btn btn-primary">
+    Add User
+  </a>
+</div>
+
+<div class="card bg-base-100 shadow mb-6">
+  <div class="card-body">
+    <form action="/admin/users" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <input type="text" name="search" value="<%= search || '' %>" class="input input-bordered md:col-span-2" placeholder="Search username or email..." />
+
+      <select name="role" class="select select-bordered">
+        <option value="">All Roles</option>
+        <% userRoles.forEach((userRole) => { %>
+        <option value="<%= userRole %>" <%= role === userRole ? 'selected' : '' %>>
+          <%= userRole %>
+        </option>
+        <% }) %>
+      </select>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary flex-1">
+          Filter
+        </button>
+
+        <a href="/admin/users" class="btn btn-ghost">
+          Reset
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>User</th>
+        <th>Role</th>
+        <th>Profile</th>
+        <th>Created At</th>
+        <th class="text-right">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (users.length === 0) { %>
+      <tr>
+        <td colspan="6" class="text-center text-base-content/60 py-8">
+          No users found
+        </td>
+      </tr>
+      <% } %>
+
+      <% users.forEach((user, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+
+        <td>
+          <div class="font-bold"><%= user.username || '-' %></div>
+          <div class="text-sm text-base-content/60"><%= user.email %></div>
+        </td>
+
+        <td>
+          <% if (user.role === 'admin') { %>
+          <span class="badge badge-primary">admin</span>
+          <% } else if (user.role === 'seller') { %>
+          <span class="badge badge-success">seller</span>
+          <% } else { %>
+          <span class="badge badge-info">buyer</span>
+          <% } %>
+        </td>
+
+        <td>
+          <div><%= user.UserProfile?.fullName || '-' %></div>
+          <div class="text-sm text-base-content/60">
+            <%= user.UserProfile?.phoneNumber || '-' %>
+          </div>
+        </td>
+
+        <td>
+          <%= user.createdAt ? user.createdAt.toLocaleDateString("id-ID") : '-' %>
+        </td>
+
+        <td>
+          <div class="flex justify-end gap-2">
+            <a href="/admin/users/<%= user.id %>" class="btn btn-info btn-xs">
+              Detail
+            </a>
+
+            <a href="/admin/users/<%= user.id %>/edit" class="btn btn-warning btn-xs">
+              Edit
+            </a>
+
+            <% if (Number(user.id) !== Number(currentUser.id)) { %>
+            <a href="/admin/users/<%= user.id %>/delete" class="btn btn-error btn-xs" onclick="return confirm('Delete this user?')">
+              Delete
+            </a>
+            <% } %>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

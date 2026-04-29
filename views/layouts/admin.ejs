@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="business">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || "Admin" %></title>
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-base-200 min-h-screen">
+  <div class="drawer lg:drawer-open">
+    <input id="admin-drawer" type="checkbox" class="drawer-toggle" />
+
+    <div class="drawer-content flex flex-col">
+      <div class="navbar bg-base-100 shadow-sm lg:hidden">
+        <div class="flex-none">
+          <label for="admin-drawer" class="btn btn-square btn-ghost">
+            ☰
+          </label>
+        </div>
+        <div class="flex-1 font-bold">Admin Panel</div>
+      </div>
+
+      <main class="p-6">
+        <%- body %>
+      </main>
+    </div>
+
+    <div class="drawer-side">
+      <label for="admin-drawer" class="drawer-overlay"></label>
+
+      <aside class="menu p-4 w-72 min-h-full bg-base-100 text-base-content">
+        <h1 class="text-2xl font-bold text-primary mb-6">TaskGo Admin</h1>
+
+        <li>
+          <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">
+            Dashboard
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/items" class="<%= currentPath.startsWith('/admin/items') ? 'active' : '' %>">
+            Items
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/users" class="<%= currentPath.startsWith('/admin/users') ? 'active' : '' %>">
+            Users
+          </a>
+        </li>
+
+        <li>
+          <a href="/admin/invoices" class="<%= currentPath.startsWith('/admin/invoices') ? 'active' : '' %>">
+            Invoices
+          </a>
+        </li>
+
+        <div class="divider"></div>
+
+        <li>
+          <a href="/logout" class="text-error">Logout</a>
+        </li>
+      </aside>
+    </div>
+  </div>
+</body>
+
+</html>

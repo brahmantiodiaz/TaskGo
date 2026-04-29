@@ -1,0 +1,74 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Item Detail</h1>
+  <p class="text-base-content/60">
+    Detail master kategori jasa.
+  </p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="card bg-base-100 shadow lg:col-span-1">
+    <figure>
+      <img src="<%= item.imageUrl %>" alt="<%= item.name %>" class="w-full h-64 object-cover">
+    </figure>
+
+    <div class="card-body">
+      <h2 class="card-title"><%= item.name %></h2>
+
+      <% if (item.status === 'active') { %>
+      <span class="badge badge-success w-fit">active</span>
+      <% } else { %>
+      <span class="badge badge-error w-fit">inactive</span>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow lg:col-span-2">
+    <div class="card-body">
+      <h2 class="card-title">Information</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table">
+          <tr>
+            <th class="w-40">ID</th>
+            <td><%= item.id %></td>
+          </tr>
+
+          <tr>
+            <th>Name</th>
+            <td><%= item.name %></td>
+          </tr>
+
+          <tr>
+            <th>Description</th>
+            <td><%= item.description %></td>
+          </tr>
+
+          <tr>
+            <th>Created By</th>
+            <td>
+              <%= item.User?.username || '-' %>
+              <div class="text-sm text-base-content/60">
+                <%= item.User?.email || '-' %>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Created At</th>
+            <td><%= item.createdAt ? item.createdAt.toLocaleString("id-ID") : '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Updated At</th>
+            <td><%= item.updatedAt ? item.updatedAt.toLocaleString("id-ID") : '-' %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card-actions justify-end mt-4">
+        <a href="/admin/items" class="btn btn-ghost">Back</a>
+        <a href="/admin/items/<%= item.id %>/edit" class="btn btn-warning">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>

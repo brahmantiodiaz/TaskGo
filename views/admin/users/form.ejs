@@ -1,0 +1,97 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold"><%= title %></h1>
+  <p class="text-base-content/60">
+    <%= isEdit ? 'Update user account.' : 'Create new user account.' %>
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow max-w-3xl">
+  <div class="card-body">
+    <% if (error?.message?.global) { %>
+    <div class="alert alert-error mb-4">
+      <span><%= error.message.global %></span>
+    </div>
+    <% } %>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+      <div>
+        <label class="label">
+          <span class="label-text">Username</span>
+        </label>
+
+        <input type="text" name="username" value="<%= detail?.username || '' %>" class="input input-bordered w-full <%= error?.message?.username ? 'input-error' : '' %>" placeholder="username" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.username || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Email</span>
+        </label>
+
+        <input type="email" name="email" value="<%= detail?.email || '' %>" class="input input-bordered w-full <%= error?.message?.email ? 'input-error' : '' %>" placeholder="user@mail.com" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.email || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">
+            Password
+            <% if (isEdit) { %>
+            <span class="text-base-content/50">(leave blank if unchanged)</span>
+            <% } %>
+          </span>
+        </label>
+
+        <input type="password" name="password" class="input input-bordered w-full <%= error?.message?.password ? 'input-error' : '' %>" placeholder="minimum 8 characters" <%= isEdit ? '' : 'required' %> />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.password || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Role</span>
+        </label>
+
+        <% const selectedRole = detail?.role || 'buyer'; %>
+
+        <select name="role" class="select select-bordered w-full <%= error?.message?.role ? 'select-error' : '' %>">
+          <% userRoles.forEach((role) => { %>
+          <option value="<%= role %>" <%= selectedRole === role ? 'selected' : '' %>>
+            <%= role %>
+          </option>
+          <% }) %>
+        </select>
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.role || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <%= isEdit ? 'Update User' : 'Create User' %>
+        </button>
+
+        <a href="/admin/users" class="btn btn-ghost">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
