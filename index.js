@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const session = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
@@ -10,7 +12,7 @@ const sellerRoutes = require("./routes/seller");
 const buyerRoutes = require("./routes/buyer");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // View engine
 app.set("view engine", "ejs");
@@ -27,7 +29,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
 	session({
-		secret: "taskgo-secret-key",
+		secret: process.env.SESSION_SECRET || "fallback-secret",
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
@@ -38,7 +40,6 @@ app.use(
 );
 
 app.use((req, res, next) => {
-	console.log();
 	res.locals.currentUser = req.session.user || null;
 	res.locals.currentPath = req.path;
 	res.locals.error = null;
