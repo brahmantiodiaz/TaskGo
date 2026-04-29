@@ -1,7 +1,7 @@
 const { Op } = require("sequelize");
 const { User, UserProfile, SellerProfile } = require("../../models");
 const { UserRole } = require("../../helpers/enums");
-const getValidationError = require("../../helpers/validators");
+const { getValidationError } = require("../../helpers/helpers");
 
 class AdminUserController {
 	static async index(req, res) {

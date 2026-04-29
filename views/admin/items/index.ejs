@@ -102,7 +102,7 @@
               Toggle
             </a>
 
-            <a href="/admin/items/<%= item.id %>/delete" class="btn btn-error btn-xs" onclick="return confirm('Delete this item?')">
+            <a href="/admin/items/<%= item.id %>/delete" class="btn btn-error delete-btn btn-xs" data-title="<%= item.name %>" data-id="<%= item.id %>">
               Delete
             </a>
           </div>
@@ -112,3 +112,27 @@
     </tbody>
   </table>
 </div>
+<script>
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", function(event) {
+      event.preventDefault();
+
+      const title = this.dataset.title;
+      const id = this.dataset.id;
+
+      Swal.fire({
+        title: "Are you sure delete this data?",
+        text: ` "${title}" will deleted permanently`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sure!",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/admin/items/${id}/delete`;
+        }
+      });
+    });
+  });
+</script>

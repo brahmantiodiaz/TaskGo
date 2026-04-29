@@ -1,15 +1,14 @@
-const { Booking, Invoice, Payment } = require("../../models");
+const { Booking, Invoice, Payment, UserProfile } = require("../../models");
 const {
 	BookingStatus,
 	InvoiceStatus,
 	PaymentStatus,
 } = require("../../helpers/enums");
-const getCurrentBuyerProfile = require("../../helpers/getCurrentBuyerProfile");
 
 class BuyerDashboardController {
 	static async index(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (!buyerProfile) {
 				return res.redirect("/buyer/profile/setup");

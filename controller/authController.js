@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const { User } = require("../models");
 const { UserRole } = require("../helpers/enums");
 const getValidationError = require("../helpers/helpers");
-
+const { Op } = require("sequelize");
 class AuthController {
 	static loginForm(req, res) {
 		res.render("auth/login", {
@@ -15,13 +15,15 @@ class AuthController {
 			const { email, password } = req.body;
 
 			const user = await User.findOne({
-				where: { email },
+				where: {
+					[Op.or]: [{ email }, { username: email }],
+				},
 			});
 
 			if (!user) {
 				return res.render("auth/login", {
 					title: "Login",
-					error: "Invalid email or password",
+					error: "Invalid username/email or password",
 				});
 			}
 
@@ -30,7 +32,7 @@ class AuthController {
 			if (!isValidPassword) {
 				return res.render("auth/login", {
 					title: "Login",
-					error: "Invalid email or password",
+					error: "Invalid username/email or password",
 				});
 			}
 
@@ -55,7 +57,6 @@ class AuthController {
 			});
 		}
 	}
-
 	static registerForm(req, res) {
 		res.render("auth/register", {
 			title: "Register",

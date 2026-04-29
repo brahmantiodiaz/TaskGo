@@ -14,7 +14,7 @@ const {
 	InvoiceStatus,
 	BookingStatus,
 } = require("../../helpers/enums");
-const getValidationError = require("../../helpers/helpers");
+const { getValidationError } = require("../../helpers/helpers");
 
 class BuyerPaymentController {
 	static async add(req, res) {
@@ -53,7 +53,11 @@ class BuyerPaymentController {
 			}
 
 			if (invoice.status === InvoiceStatus.PAID) {
-				return res.redirect(`/buyer/invoices/${invoice.id}`);
+				return res.redirect(`/buyer/bookings/${invoice.bookingId}`);
+			}
+
+			if (invoice.Payment?.paymentStatus === PaymentStatus.WAITING_CONFIRMATION) {
+				return res.redirect(`/buyer/bookings/${invoice.bookingId}`);
 			}
 
 			res.render("buyer/payments/form", {
@@ -102,16 +106,14 @@ class BuyerPaymentController {
 
 			if (!invoice) {
 				await t.rollback();
-				return res.redirect("/buyer/invoices");
+				return res.redirect("/buyer/bookings");
 			}
 
 			if (invoice.status === InvoiceStatus.PAID) {
 				await t.rollback();
-				return res.redirect(`/buyer/invoices/${invoice.id}`);
+				return res.redirect(`/buyer/bookings/${invoice.bookingId}`);
 			}
 
-
-			
 			if (invoice.Payment) {
 				await invoice.Payment.update(
 					{
@@ -154,7 +156,7 @@ class BuyerPaymentController {
 
 			await t.commit();
 
-			res.redirect("/buyer/payments");
+			res.redirect(`/buyer/bookings/${invoice.bookingId}`);
 		} catch (error) {
 			await t.rollback();
 

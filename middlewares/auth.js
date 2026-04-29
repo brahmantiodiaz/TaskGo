@@ -1,3 +1,4 @@
+const { UserProfile } = require("../models");
 function isAuthenticated(req, res, next) {
 	if (!req.session.user) {
 		return res.redirect("/login");
@@ -41,9 +42,31 @@ function setLayout(layout) {
 	};
 }
 
+async function setLocalVar(req, res, next) {
+	res.locals.currentUser = req.session.user || null;
+	res.locals.currentPath = req.path;
+	res.locals.error = null;
+	if (req.session.user) {
+		const profile = await UserProfile.findOne({
+			where: {
+				userId: req.session.user.id,
+			},
+		});
+
+		res.locals.currentProfile = profile || null;
+		res.locals.avatarUrl = profile?.avatarUrl || null;
+	} else {
+		res.locals.currentProfile = null;
+		res.locals.avatarUrl = null;
+	}
+
+	next();
+}
+
 module.exports = {
 	isAuthenticated,
 	isGuest,
 	authorizeRoles,
 	setLayout,
+	setLocalVar,
 };

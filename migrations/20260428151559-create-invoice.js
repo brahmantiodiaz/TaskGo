@@ -13,10 +13,12 @@ module.exports = {
 			invoiceNumber: {
 				type: Sequelize.STRING,
 				allowNull: false,
+				unique: true,
 			},
 			// bookingId integer [not null, unique]
 			bookingId: {
 				type: Sequelize.INTEGER,
+				allowNull: false,
 				unique: true,
 				references: {
 					model: "Bookings",
@@ -28,12 +30,12 @@ module.exports = {
 			// amount integer [not null, note: 'taken from SellerItems.price']
 			amount: {
 				type: Sequelize.INTEGER,
-				unique: true,
+				allowNull: false,
 			},
 			// status InvoiceStatus [not null, default: 'issued']
 			status: {
 				type: Sequelize.STRING,
-				unique: true,
+				allowNull: false,
 				defaultValue: "issued",
 			},
 			// issuedAt datetime [not null]
@@ -48,6 +50,7 @@ module.exports = {
 			// issuedBySellerProfileId integer [not null, note: 'seller who confirms the work is done']
 			issuedBySellerProfileId: {
 				type: Sequelize.INTEGER,
+				allowNull: false,
 				references: {
 					model: "SellerProfiles",
 					key: "id",

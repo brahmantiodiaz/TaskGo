@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { isGuest, setLayout } = require("../middlewares/auth");
-const AuthController = require("../controller/AuthController");
+const AuthController = require("../controller/authController");
 
 router.use(setLayout("layouts/auth"));
 

@@ -5,9 +5,9 @@ const {
 	SellerItem,
 	Item,
 	Invoice,
+	SellerProfile,
 } = require("../../models");
 const { BookingStatus, InvoiceStatus } = require("../../helpers/enums");
-const getCurrentSellerProfile = require("../../helpers/getCurrentSellerProfile");
 
 function generateInvoiceNumber(totalInvoice) {
 	const now = new Date();
@@ -23,7 +23,7 @@ function generateInvoiceNumber(totalInvoice) {
 class SellerBookingController {
 	static async index(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -77,7 +77,7 @@ class SellerBookingController {
 
 	static async detail(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -124,7 +124,7 @@ class SellerBookingController {
 
 	static async approve(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -162,7 +162,7 @@ class SellerBookingController {
 
 	static async reject(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -200,7 +200,7 @@ class SellerBookingController {
 
 	static async complete(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -246,7 +246,7 @@ class SellerBookingController {
 		const t = await sequelize.transaction();
 
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				await t.rollback();

@@ -1,0 +1,84 @@
+<div class="card bg-base-100 shadow mt-6">
+  <div class="card-body">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div>
+        <h2 class="card-title">Payment Information</h2>
+        <p class="text-base-content/60">
+          Status pembayaran untuk booking ini.
+        </p>
+      </div>
+
+      <% if (booking.Invoice?.Payment) { %>
+      <% if (booking.Invoice.Payment.paymentStatus === 'paid') { %>
+      <span class="badge badge-success">paid</span>
+      <% } else if (booking.Invoice.Payment.paymentStatus === 'rejected') { %>
+      <span class="badge badge-error">rejected</span>
+      <% } else if (booking.Invoice.Payment.paymentStatus === 'waiting_confirmation') { %>
+      <span class="badge badge-warning">waiting confirmation</span>
+      <% } else { %>
+      <span class="badge badge-ghost">unpaid</span>
+      <% } %>
+      <% } %>
+    </div>
+
+    <div class="divider"></div>
+
+    <% if (!booking.Invoice) { %>
+    <div class="alert">
+      <span>Payment belum bisa dibuat karena invoice belum tersedia.</span>
+    </div>
+    <% } else if (!booking.Invoice.Payment) { %>
+    <div class="alert mb-4">
+      <span>Belum ada pembayaran yang disubmit.</span>
+    </div>
+    <% } else { %>
+    <div class="overflow-x-auto mb-4">
+      <table class="table">
+        <tr>
+          <th class="w-44">Payment Method</th>
+          <td><%= booking.Invoice.Payment.paymentMethod %></td>
+        </tr>
+
+        <tr>
+          <th>Payment Status</th>
+          <td><%= booking.Invoice.Payment.paymentStatus %></td>
+        </tr>
+
+        <tr>
+          <th>Amount</th>
+          <td>
+            <%= booking.Invoice.Payment.amountIdr %>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Proof Payment</th>
+          <td>
+            <% if (booking.Invoice.Payment.proofPaymentUrl) { %>
+            <a href="<%= booking.Invoice.Payment.proofPaymentUrl %>" target="_blank" class="link link-primary">
+              Open Proof
+            </a>
+            <% } else { %>
+            -
+            <% } %>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Paid At</th>
+          <td>
+            <%= booking.Invoice.Payment.paidAt ? booking.Invoice.Payment.paidAt.toLocaleString("id-ID") : '-' %>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Confirmed At</th>
+          <td>
+            <%= booking.Invoice.Payment.confirmedAt ? booking.Invoice.Payment.confirmedAt.toLocaleString("id-ID") : '-' %>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <% } %>
+  </div>
+</div>

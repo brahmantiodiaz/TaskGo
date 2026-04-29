@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
 const sellerRoutes = require("./routes/seller");
 const buyerRoutes = require("./routes/buyer");
+const { setLocalVar } = require("./middlewares/auth");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,12 +40,7 @@ app.use(
 	}),
 );
 
-app.use((req, res, next) => {
-	res.locals.currentUser = req.session.user || null;
-	res.locals.currentPath = req.path;
-	res.locals.error = null;
-	next();
-});
+app.use(setLocalVar);
 
 // Routes
 app.use("/", indexRoutes);

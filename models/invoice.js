@@ -9,6 +9,7 @@ const {
 	optionalDate,
 	enumString,
 } = require("../helpers/validators");
+const { toIdr } = require("../helpers/helpers");
 
 module.exports = (sequelize, DataTypes) => {
 	class Invoice extends Model {
@@ -19,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
 				as: "issuedBySeller",
 			});
 			Invoice.hasOne(models.Payment, { foreignKey: "invoiceId" });
+		}
+		get amountIdr() {
+			return toIdr(this.amount);
 		}
 	}
 

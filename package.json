@@ -23,6 +23,7 @@
 	"dependencies": {
 		"bcryptjs": "^3.0.3",
 		"dotenv": "^17.4.2",
+		"easyinvoice": "^3.0.47",
 		"ejs": "^5.0.2",
 		"express": "^5.2.1",
 		"express-ejs-layouts": "^2.5.1",

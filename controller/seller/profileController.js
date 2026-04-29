@@ -1,11 +1,10 @@
 const { sequelize, User, UserProfile, SellerProfile } = require("../../models");
-const getValidationError = require("../../helpers/helpers");
-const getCurrentSellerProfile = require("../../helpers/getCurrentSellerProfile");
+const { getValidationError } = require("../../helpers/helpers");
 
 class SellerProfileController {
 	static async detail(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -23,7 +22,7 @@ class SellerProfileController {
 
 	static async setup(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (sellerProfile) {
 				return res.redirect("/seller/profile");
@@ -139,7 +138,7 @@ class SellerProfileController {
 	static async edit(req, res) {
 		try {
 			// console.log(req.body);
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
 			}
@@ -165,7 +164,7 @@ class SellerProfileController {
 		try {
 			// console.log(req.body, "<<<<<<<<<<");
 
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				await t.rollback();

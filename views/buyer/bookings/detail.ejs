@@ -1,11 +1,12 @@
 <div class="mb-6">
   <h1 class="text-3xl font-bold">Booking Detail</h1>
   <p class="text-base-content/60">
-    Detail booking kamu.
+    Detail booking, invoice, dan pembayaran dalam satu halaman.
   </p>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- Booking Information -->
   <div class="card bg-base-100 shadow">
     <div class="card-body">
       <div class="flex items-start justify-between gap-4">
@@ -23,7 +24,9 @@
         <table class="table">
           <tr>
             <th class="w-44">Booking Date</th>
-            <td><%= booking.bookingDate ? booking.bookingDate.toLocaleString("id-ID") : '-' %></td>
+            <td>
+              <%= booking.bookingDate ? booking.bookingDate.toLocaleString("id-ID") : "-" %>
+            </td>
           </tr>
 
           <tr>
@@ -33,52 +36,75 @@
 
           <tr>
             <th>Note</th>
-            <td><%= booking.note || '-' %></td>
+            <td><%= booking.note || "-" %></td>
+          </tr>
+
+          <tr>
+            <th>Status</th>
+            <td>
+              <span class="badge badge-outline"><%= booking.status %></span>
+            </td>
           </tr>
 
           <tr>
             <th>Created At</th>
-            <td><%= booking.createdAt ? booking.createdAt.toLocaleString("id-ID") : '-' %></td>
+            <td>
+              <%= booking.createdAt ? booking.createdAt.toLocaleString("id-ID") : "-" %>
+            </td>
           </tr>
         </table>
       </div>
     </div>
   </div>
 
+  <!-- Service & Seller -->
   <div class="card bg-base-100 shadow">
     <div class="card-body">
       <h2 class="card-title">Service & Seller</h2>
+
+      <div class="divider"></div>
 
       <div class="overflow-x-auto">
         <table class="table">
           <tr>
             <th class="w-44">Service</th>
-            <td><%= booking.SellerItem?.serviceTitle || '-' %></td>
+            <td><%= booking.SellerItem?.serviceTitle || "-" %></td>
           </tr>
 
           <tr>
             <th>Category</th>
-            <td><%= booking.SellerItem?.Item?.name || '-' %></td>
+            <td><%= booking.SellerItem?.Item?.name || "-" %></td>
           </tr>
 
           <tr>
             <th>Price</th>
-            <td>Rp<%= new Intl.NumberFormat("id-ID").format(booking.SellerItem?.price || 0) %></td>
+            <td>
+              Rp<%= new Intl.NumberFormat("id-ID").format(booking.SellerItem?.price || 0) %>
+            </td>
           </tr>
 
           <tr>
             <th>Duration</th>
-            <td><%= booking.SellerItem?.duration || '-' %> minutes</td>
+            <td><%= booking.SellerItem?.duration || "-" %> minutes</td>
+          </tr>
+
+          <tr>
+            <th>Location</th>
+            <td><%= booking.SellerItem?.location || "-" %></td>
           </tr>
 
           <tr>
             <th>Seller</th>
-            <td><%= booking.SellerItem?.SellerProfile?.UserProfile?.fullName || '-' %></td>
+            <td>
+              <%= booking.SellerItem?.SellerProfile?.UserProfile?.fullName || "-" %>
+            </td>
           </tr>
 
           <tr>
             <th>Seller Phone</th>
-            <td><%= booking.SellerItem?.SellerProfile?.UserProfile?.phoneNumber || '-' %></td>
+            <td>
+              <%= booking.SellerItem?.SellerProfile?.UserProfile?.phoneNumber || "-" %>
+            </td>
           </tr>
         </table>
       </div>
@@ -86,14 +112,29 @@
   </div>
 </div>
 
+<!-- Invoice Section -->
+<% if (booking.Invoice) { %>
+<%- include("invoiceDetail", { booking }) %>
+<% } %>
+
+
+<!-- Payment Section -->
+<% if (booking.Invoice?.Payment) { %>
+<%- include("paymentDetail", { booking }) %>
+<% } %>
+
+
+<!-- Actions -->
 <div class="card bg-base-100 shadow mt-6">
   <div class="card-body">
     <h2 class="card-title">Actions</h2>
 
     <div class="flex flex-wrap gap-2">
-      <a href="/buyer/bookings" class="btn btn-ghost">Back</a>
+      <a href="/buyer/bookings" class="btn btn-ghost">
+        Back
+      </a>
 
-      <% if (booking.status === 'pending' || booking.status === 'approved') { %>
+      <% if (booking.status === "pending" || booking.status === "approved") { %>
       <form action="/buyer/bookings/<%= booking.id %>/cancel" method="POST">
         <button type="submit" class="btn btn-error" onclick="return confirm('Cancel this booking?')">
           Cancel Booking
@@ -101,11 +142,9 @@
       </form>
       <% } %>
 
-      <% if (booking.Invoice) { %>
-      <a href="/buyer/invoices/<%= booking.Invoice.id %>" class="btn btn-primary">
-        View Invoice
+      <a href="/buyer/services/<%= booking.SellerItem?.id %>" class="btn btn-outline">
+        View Service
       </a>
-      <% } %>
     </div>
   </div>
 </div>

@@ -44,7 +44,7 @@
         </p>
 
         <p class="font-bold text-primary text-xl">
-          Rp<%= new Intl.NumberFormat("id-ID").format(invoice.amount) %>
+          <%= invoice.amountIdr %>
         </p>
       </div>
     </div>
@@ -86,7 +86,7 @@
             <span class="label-text">Proof Payment URL</span>
           </label>
 
-          <input type="file" name="proofPaymentUrl" value="<%= detail?.proofPaymentUrl || '' %>" class="file-input file-input-success w-full" accept="image/*"<%= error?.message?.proofPaymentUrl ? 'input-error' : '' %>" placeholder="https://example.com/payment-proof.jpg" />
+          <input type="file" name="proofPaymentUrl" value="<%= detail?.proofPaymentUrl || '' %>" class="file-input file-input-success w-full" accept="image/*" <%= error?.message?.proofPaymentUrl ? 'input-error' : '' %>" placeholder="https://example.com/payment-proof.jpg" />
 
           <label class="label">
             <span class="label-text-alt text-error">

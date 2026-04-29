@@ -1,67 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title || "Buyer" %></title>
+<%- include('__head',{title}) %>
 
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
 
 <body class="bg-base-200 min-h-screen">
-  <div class="navbar bg-base-100 shadow-sm px-8">
+  <div class="navbar bg-base-100 shadow-sm px-4 md:px-8 sticky top-0 z-50">
     <div class="flex-1">
-      <a href="/buyer" class="text-xl font-bold text-primary">TaskGo Buyer</a>
+      <a href="/buyer" class="text-xl font-bold text-primary">
+        TaskGo
+      </a>
     </div>
 
-    <div class="flex-none">
+    <div class="flex-none hidden lg:block">
       <ul class="menu menu-horizontal px-1">
         <li>
-          <a href="/buyer" class="<%= currentPath === '/buyer' ? 'active' : '' %>">
+          <a href="/buyer" class="<%= currentPath === '/buyer' ? 'menu-active' : '' %>">
             Dashboard
           </a>
         </li>
 
         <li>
-          <a href="/buyer/profile" class="<%= currentPath.startsWith('/buyer/profile') ? 'active' : '' %>">
-            Profile
-          </a>
-        </li>
-
-        <li>
-          <a href="/buyer/services" class="<%= currentPath.startsWith('/buyer/services') ? 'active' : '' %>">
+          <a href="/buyer/services" class="<%= currentPath.startsWith('/buyer/services') ? 'menu-active' : '' %>">
             Explore Services
           </a>
         </li>
-
-        <li>
-          <a href="/buyer/bookings" class="<%= currentPath.startsWith('/buyer/bookings') ? 'active' : '' %>">
-            My Bookings
-          </a>
-        </li>
-
-        <li>
-          <a href="/buyer/invoices" class="<%= currentPath.startsWith('/buyer/invoices') ? 'active' : '' %>">
-            Invoices
-          </a>
-        </li>
-
-        <li>
-          <a href="/buyer/payments" class="<%= currentPath.startsWith('/buyer/payments') ? 'active' : '' %>">
-            Payments
-          </a>
-        </li>
-
-        <li>
-          <a href="/logout" class="text-error">Logout</a>
-        </li>
       </ul>
+    </div>
+
+    <div class="flex-none ml-2">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <img src="<%= avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentProfile?.fullName || currentUser?.username || currentUser?.email || 'User') %>" alt="User Avatar" />
+          </div>
+        </div>
+
+        <ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-56 p-2 shadow">
+          <li class="px-3 py-2">
+            <div class="block p-0">
+              <p class="font-semibold">
+                <%= currentProfile?.fullName || currentUser?.username || 'Buyer' %>
+              </p>
+              <p class="text-xs text-base-content/60">
+                <%= currentUser?.email || '-' %>
+              </p>
+            </div>
+          </li>
+
+          <div class="divider my-1"></div>
+
+          <li>
+            <a href="/buyer/profile">
+              Profile
+            </a>
+          </li>
+          <li>
+            <a href="/buyer/bookings">
+              My Bookings
+            </a>
+          </li>
+
+          <li>
+            <a href="/logout" class="text-error">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
-  <main class="p-6">
+  <main class="p-4 md:p-6 max-w-7xl mx-auto">
     <%- body %>
   </main>
 </body>

@@ -5,15 +5,15 @@ const {
 	SellerItem,
 	Item,
 	Payment,
+	SellerProfile,
 } = require("../../models");
 const { Op } = require("sequelize");
 const { InvoiceStatus } = require("../../helpers/enums");
-const getCurrentSellerProfile = require("../../helpers/getCurrentSellerProfile");
 
 class SellerInvoiceController {
 	static async index(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -74,7 +74,7 @@ class SellerInvoiceController {
 
 	static async detail(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");

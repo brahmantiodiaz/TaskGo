@@ -1,13 +1,12 @@
 const { Op } = require("sequelize");
-const { SellerItem, Item } = require("../../models");
+const { SellerItem, Item, SellerProfile } = require("../../models");
 const { ItemStatus, SellerItemStatus } = require("../../helpers/enums");
-const getValidationError = require("../../helpers/helpers");
-const getCurrentSellerProfile = require("../../helpers/getCurrentSellerProfile");
+const { getValidationError } = require("../../helpers/helpers");
 
 class SellerServiceController {
 	static async index(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -64,7 +63,7 @@ class SellerServiceController {
 
 	static async add(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -94,7 +93,7 @@ class SellerServiceController {
 
 	static async create(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -146,7 +145,7 @@ class SellerServiceController {
 
 	static async detail(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -178,7 +177,7 @@ class SellerServiceController {
 
 	static async edit(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -221,7 +220,7 @@ class SellerServiceController {
 
 	static async update(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -287,7 +286,7 @@ class SellerServiceController {
 
 	static async delete(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -311,7 +310,7 @@ class SellerServiceController {
 
 	static async toggleStatus(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");

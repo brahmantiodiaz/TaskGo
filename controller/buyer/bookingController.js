@@ -6,14 +6,15 @@ const {
 	SellerProfile,
 	UserProfile,
 	Invoice,
+	Payment,
 } = require("../../models");
 const {
 	BookingStatus,
 	ItemStatus,
 	SellerItemStatus,
+	PaymentMethod,
 } = require("../../helpers/enums");
-const getValidationError = require("../../helpers/helpers");
-const getCurrentBuyerProfile = require("../../helpers/getCurrentBuyerProfile");
+const { getValidationError } = require("../../helpers/helpers");
 
 function generateBookingCode(totalBooking) {
 	const number = String(totalBooking + 1).padStart(6, "0");
@@ -23,7 +24,7 @@ function generateBookingCode(totalBooking) {
 class BuyerBookingController {
 	static async add(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (!buyerProfile) {
 				return res.redirect("/buyer/profile/setup");
@@ -71,7 +72,7 @@ class BuyerBookingController {
 
 	static async create(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (!buyerProfile) {
 				return res.redirect("/buyer/profile/setup");
@@ -131,39 +132,39 @@ class BuyerBookingController {
 		try {
 			const { search, status } = req.query;
 
-			const options = {
-				where: {
-					buyerId: req.session.user.id,
-				},
-				include: [
-					{
-						model: SellerItem,
-						include: [
-							Item,
-							{
-								model: SellerProfile,
-								include: UserProfile,
-							},
-						],
-					},
-					{
-						model: Invoice,
-					},
-				],
-				order: [["bookingDate", "DESC"]],
-			};
+			// const options = {
+			// 	where: {
+			// 		buyerId: req.session.user.id,
+			// 	},
+			// 	include: [
+			// 		{
+			// 			model: SellerItem,
+			// 			include: [
+			// 				Item,
+			// 				{
+			// 					model: SellerProfile,
+			// 					include: UserProfile,
+			// 				},
+			// 			],
+			// 		},
+			// 		{
+			// 			model: Invoice,
+			// 		},
+			// 	],
+			// 	order: [["bookingDate", "DESC"]],
+			// };
 
-			if (search) {
-				options.where.bookingCode = {
-					[Op.iLike]: `%${search}%`,
-				};
-			}
+			// if (search) {
+			// 	options.where.bookingCode = {
+			// 		[Op.iLike]: `%${search}%`,
+			// 	};
+			// }
 
-			if (status) {
-				options.where.status = status;
-			}
+			// if (status) {
+			// 	options.where.status = status;
+			// }
 
-			const bookings = await Booking.findAll(options);
+			const bookings = await Booking.BuyerBookingList(search, status, req);
 
 			res.render("buyer/bookings/index", {
 				title: "My Bookings",
@@ -200,6 +201,7 @@ class BuyerBookingController {
 					},
 					{
 						model: Invoice,
+						include: Payment,
 					},
 				],
 			});
@@ -211,6 +213,7 @@ class BuyerBookingController {
 			res.render("buyer/bookings/detail", {
 				title: "Booking Detail",
 				booking,
+				paymentMethods: Object.values(PaymentMethod),
 			});
 		} catch (error) {
 			console.log(error);

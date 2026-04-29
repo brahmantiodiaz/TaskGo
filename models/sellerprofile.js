@@ -23,6 +23,29 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: "confirmedBySellerProfileId",
 			});
 		}
+		static async geTest() {
+			return await SellerProfile.findAll();
+		}
+
+		static async getCurrentSellerProfile(req) {
+			const { UserProfile, User } = sequelize.models;
+			const userId = req.session.user.id;
+
+			const sellerProfile = await SellerProfile.findOne({
+				include: {
+					model: UserProfile,
+					where: {
+						userId,
+					},
+					include: {
+						model: User,
+						attributes: ["id", "username", "email", "role"],
+					},
+				},
+			});
+
+			return sellerProfile;
+		}
 	}
 
 	SellerProfile.init(

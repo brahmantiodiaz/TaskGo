@@ -6,18 +6,18 @@ const {
 	User,
 	SellerItem,
 	Item,
+	SellerProfile,
 } = require("../../models");
 const {
 	PaymentStatus,
 	InvoiceStatus,
 	BookingStatus,
 } = require("../../helpers/enums");
-const getCurrentSellerProfile = require("../../helpers/getCurrentSellerProfile");
 
 class SellerPaymentController {
 	static async index(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -70,7 +70,7 @@ class SellerPaymentController {
 
 	static async detail(req, res) {
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
@@ -122,7 +122,7 @@ class SellerPaymentController {
 		const t = await sequelize.transaction();
 
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				await t.rollback();
@@ -196,7 +196,7 @@ class SellerPaymentController {
 		const t = await sequelize.transaction();
 
 		try {
-			const sellerProfile = await getCurrentSellerProfile(req);
+			const sellerProfile = await SellerProfile.getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
 				await t.rollback();

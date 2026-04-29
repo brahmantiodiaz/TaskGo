@@ -19,7 +19,7 @@
 
           <tr>
             <th>Amount</th>
-            <td>Rp<%= new Intl.NumberFormat("id-ID").format(invoice.amount) %></td>
+            <td><%= invoice.amountIdr %></td>
           </tr>
 
           <tr>
@@ -107,7 +107,7 @@
 
           <tr>
             <th>Amount</th>
-            <td>Rp<%= new Intl.NumberFormat("id-ID").format(invoice.Payment.amount) %></td>
+            <td><%= invoice.Payment.amountIdr %></td>
           </tr>
 
           <tr>

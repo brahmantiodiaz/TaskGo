@@ -1,6 +1,6 @@
 "use strict";
 
-const { Model } = require("sequelize");
+const { Model, Op } = require("sequelize");
 const { BookingStatus } = require("../helpers/enums");
 const {
 	requiredString,
@@ -21,6 +21,44 @@ module.exports = (sequelize, DataTypes) => {
 
 			Booking.belongsTo(models.SellerItem, { foreignKey: "sellerItemId" });
 			Booking.hasOne(models.Invoice, { foreignKey: "bookingId" });
+		}
+
+		static async BuyerBookingList(search, status, req) {
+			const { SellerItem, Invoice, Item, SellerProfile, UserProfile } =
+				sequelize.models;
+			const options = {
+				where: {
+					buyerId: req.session.user.id,
+				},
+				include: [
+					{
+						model: SellerItem,
+						include: [
+							Item,
+							{
+								model: SellerProfile,
+								include: UserProfile,
+							},
+						],
+					},
+					{
+						model: Invoice,
+					},
+				],
+				order: [["bookingDate", "DESC"]],
+			};
+
+			if (search) {
+				options.where.bookingCode = {
+					[Op.iLike]: `%${search}%`,
+				};
+			}
+
+			if (status) {
+				options.where.status = status;
+			}
+
+			return await Booking.findAll(options);
 		}
 	}
 

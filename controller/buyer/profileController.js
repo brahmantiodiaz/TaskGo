@@ -1,11 +1,10 @@
 const { User, UserProfile } = require("../../models");
-const getValidationError = require("../../helpers/helpers");
-const getCurrentBuyerProfile = require("../../helpers/getCurrentBuyerProfile");
+const { getValidationError } = require("../../helpers/helpers");
 
 class BuyerProfileController {
 	static async detail(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (!buyerProfile) {
 				return res.redirect("/buyer/profile/setup");
@@ -23,7 +22,7 @@ class BuyerProfileController {
 
 	static async setup(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (buyerProfile) {
 				return res.redirect("/buyer/profile");
@@ -77,7 +76,7 @@ class BuyerProfileController {
 
 	static async edit(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (!buyerProfile) {
 				return res.redirect("/buyer/profile/setup");
@@ -98,7 +97,7 @@ class BuyerProfileController {
 
 	static async update(req, res) {
 		try {
-			const buyerProfile = await getCurrentBuyerProfile(req);
+			const buyerProfile = await UserProfile.getCurrentBuyerProfile(req);
 
 			if (!buyerProfile) {
 				return res.redirect("/buyer/profile/setup");
@@ -106,7 +105,7 @@ class BuyerProfileController {
 
 			const { fullName, phoneNumber, address } = req.body;
 
-			let avatarUrl = buyerProfile.avatarUrl; 
+			let avatarUrl = buyerProfile.avatarUrl;
 			if (req.file) {
 				avatarUrl = `/uploads/${req.file.filename}`;
 			}

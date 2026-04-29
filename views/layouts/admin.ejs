@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="business">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title || "Admin" %></title>
-
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
+<%- include('__head',{title}) %>
 
 <body class="bg-base-200 min-h-screen">
   <div class="drawer lg:drawer-open">
@@ -36,25 +29,25 @@
         <h1 class="text-2xl font-bold text-primary mb-6">TaskGo Admin</h1>
 
         <li>
-          <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">
+          <a href="/admin" class="<%= currentPath === '/admin' ? 'menu-active' : '' %>">
             Dashboard
           </a>
         </li>
 
         <li>
-          <a href="/admin/items" class="<%= currentPath.startsWith('/admin/items') ? 'active' : '' %>">
+          <a href="/admin/items" class="<%= currentPath.startsWith('/admin/items') ? 'menu-active' : '' %>">
             Items
           </a>
         </li>
 
         <li>
-          <a href="/admin/users" class="<%= currentPath.startsWith('/admin/users') ? 'active' : '' %>">
+          <a href="/admin/users" class="<%= currentPath.startsWith('/admin/users') ? 'menu-active' : '' %>">
             Users
           </a>
         </li>
 
         <li>
-          <a href="/admin/invoices" class="<%= currentPath.startsWith('/admin/invoices') ? 'active' : '' %>">
+          <a href="/admin/invoices" class="<%= currentPath.startsWith('/admin/invoices') ? 'menu-active' : '' %>">
             Invoices
           </a>
         </li>

@@ -25,7 +25,12 @@ module.exports = (sequelize, DataTypes) => {
 
 	User.init(
 		{
-			username: optionalString(DataTypes),
+			username: {
+				...requiredString(DataTypes, "Username"),
+				unique: {
+					msg: "Username already exist",
+				},
+			},
 
 			email: {
 				...requiredString(DataTypes, "Email"),

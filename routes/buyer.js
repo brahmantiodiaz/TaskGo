@@ -21,15 +21,15 @@ router.get("/", BuyerDashboardController.index);
 router.get("/profile", BuyerProfileController.detail);
 router.get("/profile/setup", BuyerProfileController.setup);
 router.post(
-  "/profile/setup",
-  upload.single("avatarUrl"),
-  BuyerProfileController.create,
+	"/profile/setup",
+	upload.single("avatarUrl"),
+	BuyerProfileController.create,
 );
 router.get("/profile/edit", BuyerProfileController.edit);
 router.post(
-  "/profile/edit",
-  upload.single("avatarUrl"),
-  BuyerProfileController.update,
+	"/profile/edit",
+	upload.single("avatarUrl"),
+	BuyerProfileController.update,
 );
 
 // Explore services
@@ -48,11 +48,11 @@ router.get("/invoices", BuyerInvoiceController.index);
 router.get("/invoices/:id", BuyerInvoiceController.detail);
 router.get("/invoices/:id/pay", BuyerPaymentController.add);
 router.post(
-  "/invoices/:id/pay",
-  upload.single("proofPaymentUrl"),
-  BuyerPaymentController.create,
+	"/invoices/:id/pay",
+	upload.single("proofPaymentUrl"),
+	BuyerPaymentController.create,
 );
-
+router.get("/invoices/:id/download", BuyerInvoiceController.download);
 // Payments
 router.get("/payments", BuyerPaymentController.index);
 router.get("/payments/:id", BuyerPaymentController.detail);

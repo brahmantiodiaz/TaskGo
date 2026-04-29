@@ -2,50 +2,65 @@
 
 const { Model } = require("sequelize");
 const {
-  requiredString,
-  optionalText,
-  optionalUrl,
+	requiredString,
+	optionalText,
+	optionalUrl,
 } = require("../helpers/validators");
 
 module.exports = (sequelize, DataTypes) => {
-  class UserProfile extends Model {
-    static associate(models) {
-      UserProfile.belongsTo(models.User, { foreignKey: "userId" });
-      UserProfile.hasOne(models.SellerProfile, { foreignKey: "userProfileId" });
-    }
-  }
+	class UserProfile extends Model {
+		static associate(models) {
+			UserProfile.belongsTo(models.User, { foreignKey: "userId" });
+			UserProfile.hasOne(models.SellerProfile, { foreignKey: "userProfileId" });
+		}
+		static async getCurrentBuyerProfile(req) {
+			const userId = req.session.user.id;
+			const { User } = sequelize.models;
+			const userProfile = await UserProfile.findOne({
+				where: {
+					userId,
+				},
+				include: {
+					model: User,
+					attributes: ["id", "username", "email", "role"],
+				},
+			});
 
-  UserProfile.init(
-    {
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: {
-          msg: "User already has a profile",
-        },
-        validate: {
-          notNull: {
-            msg: "User is required",
-          },
-          isInt: {
-            msg: "User must be valid",
-          },
-        },
-      },
+			return userProfile;
+		}
+	}
 
-      fullName: requiredString(DataTypes, "Full name"),
+	UserProfile.init(
+		{
+			userId: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				unique: {
+					msg: "User already has a profile",
+				},
+				validate: {
+					notNull: {
+						msg: "User is required",
+					},
+					isInt: {
+						msg: "User must be valid",
+					},
+				},
+			},
 
-      phoneNumber: requiredString(DataTypes, "Phone number"),
+			fullName: requiredString(DataTypes, "Full name"),
 
-      address: optionalText(DataTypes),
+			phoneNumber: requiredString(DataTypes, "Phone number"),
 
-      avatarUrl: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: "UserProfile",
-    },
-  );
+			address: optionalText(DataTypes),
 
-  return UserProfile;
+			avatarUrl: DataTypes.STRING,
+		},
+		{
+			sequelize,
+			modelName: "UserProfile",
+		},
+	);
+
+	return UserProfile;
 };

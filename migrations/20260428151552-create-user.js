@@ -9,10 +9,11 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			//   username varchar [note: 'optional']
+			//   username varchar notnull [note: 'optional']
 			username: {
 				type: Sequelize.STRING,
 				unique: true,
+				allowNull: false,
 			},
 			//   email varchar [not null, unique, note: 'validation: required, unique, email format']
 			email: {

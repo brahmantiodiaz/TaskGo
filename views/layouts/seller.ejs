@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="emerald">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title || "Seller" %></title>
-
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
+<%- include('__head',{title}) %>
 
 <body class="bg-base-200 min-h-screen">
   <div class="drawer lg:drawer-open">
@@ -35,37 +28,37 @@
       <aside class="menu p-4 w-72 min-h-full bg-base-100 text-base-content">
         <h1 class="text-2xl font-bold text-primary mb-6">TaskGo Seller</h1>
         <li>
-          <a href="/seller" class="<%= currentPath === '/seller' ? 'active' : '' %>">
+          <a href="/seller" class="<%= currentPath === '/seller' ? 'menu-active' : '' %>">
             Dashboard
           </a>
         </li>
 
         <li>
-          <a href="/seller/profile" class="<%= currentPath.startsWith('/seller/profile') ? 'active' : '' %>">
+          <a href="/seller/profile" class="<%= currentPath.startsWith('/seller/profile') ? 'menu-active' : '' %>">
             Profile
           </a>
         </li>
 
         <li>
-          <a href="/seller/services" class="<%= currentPath.startsWith('/seller/services') ? 'active' : '' %>">
+          <a href="/seller/services" class="<%= currentPath.startsWith('/seller/services') ? 'menu-active' : '' %>">
             My Services
           </a>
         </li>
 
         <li>
-          <a href="/seller/bookings" class="<%= currentPath.startsWith('/seller/bookings') ? 'active' : '' %>">
+          <a href="/seller/bookings" class="<%= currentPath.startsWith('/seller/bookings') ? 'menu-active' : '' %>">
             Bookings
           </a>
         </li>
 
         <li>
-          <a href="/seller/invoices" class="<%= currentPath.startsWith('/seller/invoices') ? 'active' : '' %>">
+          <a href="/seller/invoices" class="<%= currentPath.startsWith('/seller/invoices') ? 'menu-active' : '' %>">
             Invoices
           </a>
         </li>
 
         <li>
-          <a href="/seller/payments" class="<%= currentPath.startsWith('/seller/payments') ? 'active' : '' %>">
+          <a href="/seller/payments" class="<%= currentPath.startsWith('/seller/payments') ? 'menu-active' : '' %>">
             Payments
           </a>
         </li>

@@ -78,7 +78,7 @@
         </td>
 
         <td>
-          Rp<%= new Intl.NumberFormat("id-ID").format(invoice.amount) %>
+          <%= invoice.amountIdr %>
         </td>
 
         <td>
@@ -104,8 +104,8 @@
             <a href="/buyer/invoices/<%= invoice.id %>" class="btn btn-info btn-xs">
               Detail
             </a>
-
-            <% if (invoice.status !== 'paid') { %>
+            <% console.log(invoice.Payment?.paymentStatus); %>
+            <% if (invoice.Payment?.paymentStatus === "unpaid" || invoice.Payment?.paymentStatus === "rejected" || !invoice.Payment) { %>
             <a href="/buyer/invoices/<%= invoice.id %>/pay" class="btn btn-primary btn-xs">
               Pay
             </a>
