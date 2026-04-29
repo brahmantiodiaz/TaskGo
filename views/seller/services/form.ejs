@@ -1,0 +1,144 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold"><%= title %></h1>
+  <p class="text-base-content/60">
+    <%= isEdit ? 'Update your service.' : 'Create new service based on active item category.' %>
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow max-w-4xl">
+  <div class="card-body">
+    <% if (error?.message?.global) { %>
+    <div class="alert alert-error mb-4">
+      <span><%= error.message.global %></span>
+    </div>
+    <% } %>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+      <div>
+        <label class="label">
+          <span class="label-text">Item Category</span>
+        </label>
+
+        <select name="itemId" class="select select-bordered w-full <%= error?.message?.itemId ? 'select-error' : '' %>">
+          <option value="" selected disabled>Choose item category</option>
+
+          <% items.forEach((item) => { %>
+          <option value="<%= item.id %>" <%= Number(detail?.itemId) === Number(item.id) ? 'selected' : '' %>>
+            <%= item.name %>
+          </option>
+          <% }) %>
+        </select>
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.itemId || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Service Title</span>
+        </label>
+
+        <input type="text" name="serviceTitle" value="<%= detail?.serviceTitle || '' %>" class="input input-bordered w-full <%= error?.message?.serviceTitle ? 'input-error' : '' %>" placeholder="Pijat Refleksi 60 Menit" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.serviceTitle || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Service Description</span>
+        </label>
+
+        <textarea name="serviceDescription" rows="4" class="textarea textarea-bordered w-full <%= error?.message?.serviceDescription ? 'textarea-error' : '' %>" placeholder="Detail service dari seller..."><%= detail?.serviceDescription || '' %></textarea>
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.serviceDescription || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="label">
+            <span class="label-text">Price</span>
+          </label>
+
+          <input type="number" name="price" value="<%= detail?.price || '' %>" class="input input-bordered w-full <%= error?.message?.price ? 'input-error' : '' %>" placeholder="100000" min="10000" />
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.price || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Duration</span>
+          </label>
+
+          <input type="number" name="duration" value="<%= detail?.duration || '' %>" class="input input-bordered w-full <%= error?.message?.duration ? 'input-error' : '' %>" placeholder="60" min="30" />
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.duration || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Status</span>
+          </label>
+
+          <% const selectedStatus = detail?.status || 'available'; %>
+
+          <select name="status" class="select select-bordered w-full <%= error?.message?.status ? 'select-error' : '' %>">
+            <% sellerItemStatuses.forEach((status) => { %>
+            <option value="<%= status %>" <%= selectedStatus === status ? 'selected' : '' %>>
+              <%= status %>
+            </option>
+            <% }) %>
+          </select>
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.status || '' %>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Location</span>
+        </label>
+
+        <input type="text" name="location" value="<%= detail?.location || '' %>" class="input input-bordered w-full <%= error?.message?.location ? 'input-error' : '' %>" placeholder="Jakarta Selatan" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.location || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <%= isEdit ? 'Update Service' : 'Create Service' %>
+        </button>
+
+        <a href="/seller/services" class="btn btn-ghost">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

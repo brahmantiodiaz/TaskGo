@@ -1,0 +1,92 @@
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-3xl font-bold">Seller Profile</h1>
+    <p class="text-base-content/60">
+      Informasi profil dan rekening seller.
+    </p>
+  </div>
+
+  <a href="/seller/profile/edit" class="btn btn-primary">
+    Edit Profile
+  </a>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Personal Information</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table">
+          <tr>
+            <th class="w-44">Full Name</th>
+            <td><%= sellerProfile.UserProfile?.fullName || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Email</th>
+            <td><%= sellerProfile.UserProfile?.User?.email || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Phone Number</th>
+            <td><%= sellerProfile.UserProfile?.phoneNumber || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Address</th>
+            <td><%= sellerProfile.UserProfile?.address || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Avatar</th>
+            <td>
+              <% if (sellerProfile.UserProfile?.avatarUrl) { %>
+              <a href="<%= sellerProfile.UserProfile.avatarUrl %>" target="_blank" class="link link-primary">
+                Open Avatar
+              </a>
+              <% } else { %>
+              -
+              <% } %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Seller Information</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table">
+          <tr>
+            <th class="w-44">Headline</th>
+            <td><%= sellerProfile.headline || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Description</th>
+            <td><%= sellerProfile.description || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Experience</th>
+            <td><%= sellerProfile.experienceYear || 0 %> year(s)</td>
+          </tr>
+
+          <tr>
+            <th>Bank Name</th>
+            <td><%= sellerProfile.bankName || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Bank Account</th>
+            <td><%= sellerProfile.bankAccountNumber || '-' %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
