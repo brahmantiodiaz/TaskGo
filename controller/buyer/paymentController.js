@@ -75,7 +75,12 @@ class BuyerPaymentController {
 
 		try {
 			const { id } = req.params;
-			const { paymentMethod, proofPaymentUrl } = req.body;
+			const { paymentMethod } = req.body;
+
+			let proofPaymentUrl = null;
+			if (req.file) {
+				proofPaymentUrl = `/uploads/${req.file.filename}`;
+			}
 
 			const invoice = await Invoice.findOne({
 				where: {
@@ -105,6 +110,8 @@ class BuyerPaymentController {
 				return res.redirect(`/buyer/invoices/${invoice.id}`);
 			}
 
+
+			
 			if (invoice.Payment) {
 				await invoice.Payment.update(
 					{

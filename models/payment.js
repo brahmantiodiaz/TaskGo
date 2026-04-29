@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 				PaymentStatus.UNPAID,
 			),
 
-			proofPaymentUrl: optionalUrl(DataTypes, "Proof payment URL"),
+			proofPaymentUrl: DataTypes.STRING,
 
 			paidAt: optionalDate(DataTypes, "Paid at"),
 

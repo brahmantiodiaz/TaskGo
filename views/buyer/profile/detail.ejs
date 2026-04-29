@@ -37,18 +37,25 @@
           <td><%= buyerProfile.address || '-' %></td>
         </tr>
 
-        <tr>
-          <th>Avatar</th>
-          <td>
-            <% if (buyerProfile.avatarUrl) { %>
-            <a href="<%= buyerProfile.avatarUrl %>" target="_blank" class="link link-primary">
-              Open Avatar
-            </a>
-            <% } else { %>
-            -
-            <% } %>
+              <tr>
+          <th class="w-44 align-middle">Avatar</th>
+          <td class="align-middle">
+            <div class="avatar">
+              <div class="w-20 h-20 rounded-[24px] border-2 border-black p-1 bg-white shadow-md flex items-center justify-center overflow-hidden">
+                <div class="w-full h-full rounded-[18px] overflow-hidden bg-base-200">
+                  <% if (buyerProfile.avatarUrl && buyerProfile.avatarUrl !== '-') { %>
+                    <img src="<%= buyerProfile.avatarUrl %>" class="w-full h-full object-cover" alt="Profile" />
+                  <% } else { %>
+                    <img src="https://ui-avatars.com<%= buyerProfile.fullName || 'User' %>&background=641ae6&color=fff&bold=true&size=128" class="w-full h-full" />
+                  <% } %>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
+
+
+
 
         <tr>
           <th>Created At</th>

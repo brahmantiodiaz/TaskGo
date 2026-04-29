@@ -26,7 +26,11 @@ router.post(
   BuyerProfileController.create,
 );
 router.get("/profile/edit", BuyerProfileController.edit);
-router.post("/profile/edit", BuyerProfileController.update);
+router.post(
+  "/profile/edit",
+  upload.single("avatarUrl"),
+  BuyerProfileController.update,
+);
 
 // Explore services
 router.get("/services", BuyerServiceController.index);

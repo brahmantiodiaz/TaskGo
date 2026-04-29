@@ -46,7 +46,12 @@ class BuyerProfileController {
 
 	static async create(req, res) {
 		try {
-			const { fullName, phoneNumber, address, avatarUrl } = req.body;
+			const { fullName, phoneNumber, address } = req.body;
+
+			let avatarUrl = null;
+			if (req.file) {
+				avatarUrl = `/uploads/${req.file.filename}`;
+			}
 
 			await UserProfile.create({
 				userId: req.session.user.id,
@@ -101,10 +106,10 @@ class BuyerProfileController {
 
 			const { fullName, phoneNumber, address } = req.body;
 
-			let avatarUrl = null;
-      if (req.file) {
-        avatarUrl = `/uploads/${req.file.filename}`;
-      }
+			let avatarUrl = buyerProfile.avatarUrl; 
+			if (req.file) {
+				avatarUrl = `/uploads/${req.file.filename}`;
+			}
 
 			await buyerProfile.update({
 				fullName,
