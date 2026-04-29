@@ -13,7 +13,7 @@
     </div>
     <% } %>
 
-    <form action="<%= action %>" method="POST" class="space-y-4">
+    <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="space-y-4">
       <div>
         <label class="label">
           <span class="label-text">Name</span>
@@ -45,9 +45,9 @@
       <div>
         <label class="label">
           <span class="label-text">Image URL</span>
-        </label>
+        </label><br>
 
-        <input type="text" name="imageUrl" value="<%= detail?.imageUrl || '' %>" class="input input-bordered w-full <%= error?.message?.imageUrl ? 'input-error' : '' %>" placeholder="https://example.com/image.jpg" />
+        <input type="file" name="imageUrl" value="<%= detail?.imageUrl || '' %>" class="file-input file-input-success w-full" accept="image/*" <%= error?.message?.imageUrl ? 'input-error' : '' %>" placeholder="https://example.com/image.jpg" />
 
         <label class="label">
           <span class="label-text-alt text-error">
