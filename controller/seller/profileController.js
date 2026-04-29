@@ -58,13 +58,17 @@ class SellerProfileController {
 				fullName,
 				phoneNumber,
 				address,
-				avatarUrl,
 				headline,
 				description,
 				experienceYear,
 				bankName,
 				bankAccountNumber,
 			} = req.body;
+
+			let avatarUrl = null;
+			if (req.file) {
+				avatarUrl = `/uploads/${req.file.filename}`;
+			}
 
 			let userProfile = await UserProfile.findOne({
 				where: {
@@ -134,12 +138,11 @@ class SellerProfileController {
 
 	static async edit(req, res) {
 		try {
+			// console.log(req.body);
 			const sellerProfile = await getCurrentSellerProfile(req);
-
 			if (!sellerProfile) {
 				return res.redirect("/seller/profile/setup");
 			}
-
 			res.render("seller/profile/form", {
 				title: "Edit Seller Profile",
 				action: "/seller/profile/edit",
@@ -158,8 +161,10 @@ class SellerProfileController {
 
 	static async update(req, res) {
 		const t = await sequelize.transaction();
-		console.log(req.body);
+
 		try {
+			// console.log(req.body, "<<<<<<<<<<");
+
 			const sellerProfile = await getCurrentSellerProfile(req);
 
 			if (!sellerProfile) {
@@ -171,13 +176,17 @@ class SellerProfileController {
 				fullName,
 				phoneNumber,
 				address,
-				avatarUrl,
 				headline,
 				description,
 				experienceYear,
 				bankName,
 				bankAccountNumber,
 			} = req.body;
+
+			let avatarUrl = null;
+			if (req.file) {
+				avatarUrl = `/uploads/${req.file.filename}`;
+			}
 
 			await sellerProfile.UserProfile.update(
 				{

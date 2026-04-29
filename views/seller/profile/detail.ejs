@@ -38,18 +38,23 @@
             <td><%= sellerProfile.UserProfile?.address || '-' %></td>
           </tr>
 
-          <tr>
-            <th>Avatar</th>
+           <tr>
+            <th class="align-middle">Avatar</th>
             <td>
-              <% if (sellerProfile.UserProfile?.avatarUrl) { %>
-              <a href="<%= sellerProfile.UserProfile.avatarUrl %>" target="_blank" class="link link-primary">
-                Open Avatar
-              </a>
-              <% } else { %>
-              -
-              <% } %>
+              <div class="flex items-center gap-4">
+                <div class="avatar">
+                  <div class="w-20 h-20 rounded-2xl ring ring-primary ring-offset-base-100 ring-offset-2 shadow-xl transition-transform duration-300 hover:scale-105">
+                    <% if (sellerProfile.UserProfile?.avatarUrl && sellerProfile.UserProfile?.avatarUrl !== '-') { %>
+                      <img src="<%= sellerProfile.UserProfile.avatarUrl %>" class="object-cover" alt="Profile" />
+                    <% } else { %>
+                      <img src="https://ui-avatars.com<%= sellerProfile.UserProfile?.fullName || 'User' %>&background=641ae6&color=fff&bold=true&size=128" />
+                    <% } %>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
+
         </table>
       </div>
     </div>

@@ -67,15 +67,12 @@ class AuthController {
 		try {
 			const { username, email, password } = req.body;
 
-			const hashedPassword = await bcrypt.hash(password, 10);
-
 			await User.create({
 				username,
 				email,
-				password: hashedPassword,
+				password,
 				role: UserRole.BUYER,
 			});
-
 			res.redirect("/login");
 		} catch (error) {
 			if (error.name === "SequelizeValidationError") {
@@ -86,6 +83,7 @@ class AuthController {
 					error: customError,
 				});
 			}
+			console.log(error);
 		}
 	}
 

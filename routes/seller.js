@@ -2,6 +2,8 @@ const router = require("express").Router();
 
 const { authorizeRoles, setLayout } = require("../middlewares/auth");
 const { UserRole } = require("../helpers/enums");
+const upload = require("../helpers/multer");
+
 const SellerDashboardController = require("../controller/seller/dashboardController");
 const SellerProfileController = require("../controller/seller/profileController");
 const SellerServiceController = require("../controller/seller/serviceController");
@@ -18,9 +20,17 @@ router.get("/", SellerDashboardController.index);
 // Profile
 router.get("/profile", SellerProfileController.detail);
 router.get("/profile/setup", SellerProfileController.setup);
-router.post("/profile/setup", SellerProfileController.create);
+router.post(
+  "/profile/setup",
+  upload.single("avatarUrl"),
+  SellerProfileController.create,
+);
 router.get("/profile/edit", SellerProfileController.edit);
-router.post("/profile/edit", SellerProfileController.update);
+router.post(
+  "/profile/edit",
+  upload.single("avatarUrl"),
+  SellerProfileController.update,
+);
 
 // Services
 router.get("/services", SellerServiceController.index);
@@ -39,8 +49,8 @@ router.post("/bookings/:id/approve", SellerBookingController.approve);
 router.post("/bookings/:id/reject", SellerBookingController.reject);
 router.post("/bookings/:id/complete", SellerBookingController.complete);
 router.post(
-	"/bookings/:id/create-invoice",
-	SellerBookingController.createInvoice,
+  "/bookings/:id/create-invoice",
+  SellerBookingController.createInvoice,
 );
 
 // Invoices

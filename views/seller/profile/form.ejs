@@ -13,7 +13,7 @@
     </div>
     <% } %>
 
-    <form action="<%= action %>" method="POST" class="space-y-6">
+    <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="space-y-6">
       <div>
         <h2 class="text-xl font-bold mb-3">Personal Information</h2>
 
@@ -62,11 +62,10 @@
         </div>
 
         <div>
-          <label class="label">
-            <span class="label-text">Avatar URL</span>
-          </label>
+          <label class="label"><span class="label-text">Avatar Profile</span></label>
+  
 
-          <input type="text" name="avatarUrl" value="<%= detail?.avatarUrl || '' %>" class="input input-bordered w-full <%= error?.message?.avatarUrl ? 'input-error' : '' %>" placeholder="https://example.com/avatar.jpg" />
+          <input type="file" name="avatarUrl" value="<%= detail?.avatarUrl || '' %>" class="file-input file-input-success w-full" accept="image/*" <%= error?.message?.avatarUrl ? 'input-error' : '' %>" placeholder="https://example.com/avatar.jpg" />
 
           <label class="label">
             <span class="label-text-alt text-error">
