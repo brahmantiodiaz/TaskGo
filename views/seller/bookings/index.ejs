@@ -1,0 +1,91 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Bookings</h1>
+  <p class="text-base-content/60">
+    Daftar booking yang masuk ke layanan kamu.
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow mb-6">
+  <div class="card-body">
+    <form action="/seller/bookings" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <input type="text" name="search" value="<%= search || '' %>" class="input input-bordered md:col-span-2" placeholder="Search booking code..." />
+
+      <select name="status" class="select select-bordered">
+        <option value="">All Status</option>
+        <% bookingStatuses.forEach((bookingStatus) => { %>
+        <option value="<%= bookingStatus %>" <%= status === bookingStatus ? 'selected' : '' %>>
+          <%= bookingStatus %>
+        </option>
+        <% }) %>
+      </select>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary flex-1">Filter</button>
+        <a href="/seller/bookings" class="btn btn-ghost">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Booking</th>
+        <th>Buyer</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th class="text-right">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (bookings.length === 0) { %>
+      <tr>
+        <td colspan="7" class="text-center text-base-content/60 py-8">
+          No bookings found
+        </td>
+      </tr>
+      <% } %>
+
+      <% bookings.forEach((booking, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+
+        <td>
+          <div class="font-bold"><%= booking.bookingCode %></div>
+          <div class="text-sm text-base-content/60"><%= booking.address %></div>
+        </td>
+
+        <td>
+          <div><%= booking.buyer?.username || '-' %></div>
+          <div class="text-sm text-base-content/60"><%= booking.buyer?.email || '-' %></div>
+        </td>
+
+        <td>
+          <div><%= booking.SellerItem?.serviceTitle || '-' %></div>
+          <div class="text-sm text-base-content/60"><%= booking.SellerItem?.Item?.name || '-' %></div>
+        </td>
+
+        <td>
+          <%= booking.bookingDate ? booking.bookingDate.toLocaleString("id-ID") : '-' %>
+        </td>
+
+        <td>
+          <span class="badge badge-outline"><%= booking.status %></span>
+        </td>
+
+        <td>
+          <div class="flex justify-end">
+            <a href="/seller/bookings/<%= booking.id %>" class="btn btn-info btn-xs">
+              Detail
+            </a>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,64 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Service Detail</h1>
+  <p class="text-base-content/60">
+    Detail layanan yang kamu tawarkan.
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow max-w-4xl">
+  <div class="card-body">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+      <div>
+        <h2 class="card-title text-2xl"><%= service.serviceTitle %></h2>
+        <p class="text-base-content/60"><%= service.Item?.name || '-' %></p>
+      </div>
+
+      <% if (service.status === 'available') { %>
+      <span class="badge badge-success">available</span>
+      <% } else { %>
+      <span class="badge badge-error">unavailable</span>
+      <% } %>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="overflow-x-auto">
+      <table class="table">
+        <tr>
+          <th class="w-44">Description</th>
+          <td><%= service.serviceDescription %></td>
+        </tr>
+
+        <tr>
+          <th>Price</th>
+          <td>Rp<%= new Intl.NumberFormat("id-ID").format(service.price) %></td>
+        </tr>
+
+        <tr>
+          <th>Duration</th>
+          <td><%= service.duration %> minutes</td>
+        </tr>
+
+        <tr>
+          <th>Location</th>
+          <td><%= service.location %></td>
+        </tr>
+
+        <tr>
+          <th>Created At</th>
+          <td><%= service.createdAt ? service.createdAt.toLocaleString("id-ID") : '-' %></td>
+        </tr>
+
+        <tr>
+          <th>Updated At</th>
+          <td><%= service.updatedAt ? service.updatedAt.toLocaleString("id-ID") : '-' %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card-actions justify-end mt-4">
+      <a href="/seller/services" class="btn btn-ghost">Back</a>
+      <a href="/seller/services/<%= service.id %>/edit" class="btn btn-warning">Edit</a>
+    </div>
+  </div>
+</div>
