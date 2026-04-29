@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const { authorizeRoles, setLayout } = require("../middlewares/auth");
 const { UserRole } = require("../helpers/enums");
+const upload = require("../helpers/multer");
 
 const AdminDashboardController = require("../controller/admin/dashboard");
 const AdminItemController = require("../controller/admin/items");
@@ -17,7 +18,11 @@ router.get("/", AdminDashboardController.index);
 // Items CRUD
 router.get("/items", AdminItemController.index);
 router.get("/items/add", AdminItemController.add);
-router.post("/items/add", AdminItemController.create);
+router.post(
+  "/items/add",
+  upload.single("imageUrl"),
+  AdminItemController.create,
+);
 router.get("/items/:id", AdminItemController.detail);
 router.get("/items/:id/edit", AdminItemController.edit);
 router.post("/items/:id/edit", AdminItemController.update);

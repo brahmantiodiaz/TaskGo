@@ -1,0 +1,106 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Seller Dashboard</h1>
+  <p class="text-base-content/60">
+    Selamat datang, <%= sellerProfile?.UserProfile?.fullName || currentUser?.username || currentUser?.email %>
+  </p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">My Services</div>
+      <div class="stat-value"><%= totalServices %></div>
+      <div class="stat-desc">Total layanan aktif/nonaktif</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Total Bookings</div>
+      <div class="stat-value"><%= totalBookings %></div>
+      <div class="stat-desc">Booking masuk</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Pending</div>
+      <div class="stat-value"><%= pendingBookings %></div>
+      <div class="stat-desc">Menunggu approval</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Completed</div>
+      <div class="stat-value"><%= completedBookings %></div>
+      <div class="stat-desc">Booking selesai</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Invoices</div>
+      <div class="stat-value"><%= totalInvoices %></div>
+      <div class="stat-desc">Total invoice</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Paid Invoices</div>
+      <div class="stat-value"><%= paidInvoices %></div>
+      <div class="stat-desc">Invoice paid</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Waiting Payments</div>
+      <div class="stat-value"><%= waitingPayments %></div>
+      <div class="stat-desc">Butuh konfirmasi</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Revenue</div>
+      <div class="stat-value text-primary text-2xl">
+        Rp<%= new Intl.NumberFormat("id-ID").format(totalRevenue) %>
+      </div>
+      <div class="stat-desc">Dari invoice paid</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Profile</h2>
+      <p>Lengkapi profil seller agar bisa menawarkan layanan.</p>
+      <div class="card-actions justify-end">
+        <a href="/seller/profile" class="btn btn-primary btn-sm">Open Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">My Services</h2>
+      <p>Kelola layanan yang kamu tawarkan ke buyer.</p>
+      <div class="card-actions justify-end">
+        <a href="/seller/services" class="btn btn-primary btn-sm">Open Services</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Bookings</h2>
+      <p>Lihat dan proses booking yang masuk.</p>
+      <div class="card-actions justify-end">
+        <a href="/seller/bookings" class="btn btn-primary btn-sm">Open Bookings</a>
+      </div>
+    </div>
+  </div>
+</div>

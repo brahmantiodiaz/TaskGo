@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 
 			description: requiredText(DataTypes, "Description"),
 
-			imageUrl: requiredUrl(DataTypes, "Image URL"),
+			imageUrl: requiredString(DataTypes, "Image URL"),
 
 			status: enumString(
 				DataTypes,

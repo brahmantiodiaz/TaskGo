@@ -1,0 +1,168 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold"><%= title %></h1>
+  <p class="text-base-content/60">
+    Lengkapi data personal dan profil seller.
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow max-w-4xl">
+  <div class="card-body">
+    <% if (error?.message?.global) { %>
+    <div class="alert alert-error mb-4">
+      <span><%= error.message.global %></span>
+    </div>
+    <% } %>
+
+    <form action="<%= action %>" method="POST" class="space-y-6">
+      <div>
+        <h2 class="text-xl font-bold mb-3">Personal Information</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="label">
+              <span class="label-text">Full Name</span>
+            </label>
+
+            <input type="text" name="fullName" value="<%= detail?.fullName || '' %>" class="input input-bordered w-full <%= error?.message?.fullName ? 'input-error' : '' %>" placeholder="Full name" />
+
+            <label class="label">
+              <span class="label-text-alt text-error">
+                <%= error?.message?.fullName || '' %>
+              </span>
+            </label>
+          </div>
+
+          <div>
+            <label class="label">
+              <span class="label-text">Phone Number</span>
+            </label>
+
+            <input type="text" name="phoneNumber" value="<%= detail?.phoneNumber || '' %>" class="input input-bordered w-full <%= error?.message?.phoneNumber ? 'input-error' : '' %>" placeholder="08xxxxxxxxxx" />
+
+            <label class="label">
+              <span class="label-text-alt text-error">
+                <%= error?.message?.phoneNumber || '' %>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Address</span>
+          </label>
+
+          <textarea name="address" rows="3" class="textarea textarea-bordered w-full <%= error?.message?.address ? 'textarea-error' : '' %>" placeholder="Address"><%= detail?.address || '' %></textarea>
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.address || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Avatar URL</span>
+          </label>
+
+          <input type="text" name="avatarUrl" value="<%= detail?.avatarUrl || '' %>" class="input input-bordered w-full <%= error?.message?.avatarUrl ? 'input-error' : '' %>" placeholder="https://example.com/avatar.jpg" />
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.avatarUrl || '' %>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div>
+        <h2 class="text-xl font-bold mb-3">Seller Information</h2>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Headline</span>
+          </label>
+
+          <input type="text" name="headline" value="<%= detail?.headline || '' %>" class="input input-bordered w-full <%= error?.message?.headline ? 'input-error' : '' %>" placeholder="Saya bisa membantu membersihkan rumah dengan cepat dan rapi" />
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.headline || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Description</span>
+          </label>
+
+          <textarea name="description" rows="4" class="textarea textarea-bordered w-full <%= error?.message?.description ? 'textarea-error' : '' %>" placeholder="Describe your experience and service..."><%= detail?.description || '' %></textarea>
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.description || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label">
+              <span class="label-text">Experience Year</span>
+            </label>
+
+            <input type="number" name="experienceYear" value="<%= detail?.experienceYear ?? 0 %>" class="input input-bordered w-full <%= error?.message?.experienceYear ? 'input-error' : '' %>" min="0" />
+
+            <label class="label">
+              <span class="label-text-alt text-error">
+                <%= error?.message?.experienceYear || '' %>
+              </span>
+            </label>
+          </div>
+
+          <div>
+            <label class="label">
+              <span class="label-text">Bank Name</span>
+            </label>
+
+            <input type="text" name="bankName" value="<%= detail?.bankName || '' %>" class="input input-bordered w-full <%= error?.message?.bankName ? 'input-error' : '' %>" placeholder="BCA" />
+
+            <label class="label">
+              <span class="label-text-alt text-error">
+                <%= error?.message?.bankName || '' %>
+              </span>
+            </label>
+          </div>
+
+          <div>
+            <label class="label">
+              <span class="label-text">Bank Account Number</span>
+            </label>
+
+            <input type="text" name="bankAccountNumber" value="<%= detail?.bankAccountNumber || '' %>" class="input input-bordered w-full <%= error?.message?.bankAccountNumber ? 'input-error' : '' %>" placeholder="1234567890" />
+
+            <label class="label">
+              <span class="label-text-alt text-error">
+                <%= error?.message?.bankAccountNumber || '' %>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <%= isEdit ? 'Update Profile' : 'Create Profile' %>
+        </button>
+
+        <a href="/seller/profile" class="btn btn-ghost">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
