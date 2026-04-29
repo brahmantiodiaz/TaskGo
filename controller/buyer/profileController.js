@@ -99,7 +99,12 @@ class BuyerProfileController {
 				return res.redirect("/buyer/profile/setup");
 			}
 
-			const { fullName, phoneNumber, address, avatarUrl } = req.body;
+			const { fullName, phoneNumber, address } = req.body;
+
+			let avatarUrl = null;
+      if (req.file) {
+        avatarUrl = `/uploads/${req.file.filename}`;
+      }
 
 			await buyerProfile.update({
 				fullName,

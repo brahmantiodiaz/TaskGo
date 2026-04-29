@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const { authorizeRoles, setLayout } = require("../middlewares/auth");
 const { UserRole } = require("../helpers/enums");
+const upload = require("../helpers/multer");
 
 const BuyerDashboardController = require("../controller/buyer/dashboardController");
 const BuyerProfileController = require("../controller/buyer/profileController");
@@ -19,7 +20,11 @@ router.get("/", BuyerDashboardController.index);
 // Profile
 router.get("/profile", BuyerProfileController.detail);
 router.get("/profile/setup", BuyerProfileController.setup);
-router.post("/profile/setup", BuyerProfileController.create);
+router.post(
+  "/profile/setup",
+  upload.single("avatarUrl"),
+  BuyerProfileController.create,
+);
 router.get("/profile/edit", BuyerProfileController.edit);
 router.post("/profile/edit", BuyerProfileController.update);
 
@@ -38,7 +43,11 @@ router.post("/bookings/:id/cancel", BuyerBookingController.cancel);
 router.get("/invoices", BuyerInvoiceController.index);
 router.get("/invoices/:id", BuyerInvoiceController.detail);
 router.get("/invoices/:id/pay", BuyerPaymentController.add);
-router.post("/invoices/:id/pay", BuyerPaymentController.create);
+router.post(
+  "/invoices/:id/pay",
+  upload.single("proofPaymentUrl"),
+  BuyerPaymentController.create,
+);
 
 // Payments
 router.get("/payments", BuyerPaymentController.index);

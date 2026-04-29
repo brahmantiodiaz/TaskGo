@@ -58,7 +58,7 @@
       </div>
       <% } %>
 
-      <form action="<%= action %>" method="POST" class="space-y-4">
+      <form action="<%= action %>" method="POST" enctype="multipart/form-data" class="space-y-4">
         <div>
           <label class="label">
             <span class="label-text">Payment Method</span>
@@ -86,7 +86,7 @@
             <span class="label-text">Proof Payment URL</span>
           </label>
 
-          <input type="text" name="proofPaymentUrl" value="<%= detail?.proofPaymentUrl || '' %>" class="input input-bordered w-full <%= error?.message?.proofPaymentUrl ? 'input-error' : '' %>" placeholder="https://example.com/payment-proof.jpg" />
+          <input type="file" name="proofPaymentUrl" value="<%= detail?.proofPaymentUrl || '' %>" class="file-input file-input-success w-full" accept="image/*"<%= error?.message?.proofPaymentUrl ? 'input-error' : '' %>" placeholder="https://example.com/payment-proof.jpg" />
 
           <label class="label">
             <span class="label-text-alt text-error">
