@@ -1,0 +1,84 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold"><%= title %></h1>
+  <p class="text-base-content/60">
+    Lengkapi data profil buyer.
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow max-w-4xl">
+  <div class="card-body">
+    <% if (error?.message?.global) { %>
+    <div class="alert alert-error mb-4">
+      <span><%= error.message.global %></span>
+    </div>
+    <% } %>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+      <div>
+        <label class="label">
+          <span class="label-text">Full Name</span>
+        </label>
+
+        <input type="text" name="fullName" value="<%= detail?.fullName || '' %>" class="input input-bordered w-full <%= error?.message?.fullName ? 'input-error' : '' %>" placeholder="Full name" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.fullName || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Phone Number</span>
+        </label>
+
+        <input type="text" name="phoneNumber" value="<%= detail?.phoneNumber || '' %>" class="input input-bordered w-full <%= error?.message?.phoneNumber ? 'input-error' : '' %>" placeholder="08xxxxxxxxxx" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.phoneNumber || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Address</span>
+        </label>
+
+        <textarea name="address" rows="4" class="textarea textarea-bordered w-full <%= error?.message?.address ? 'textarea-error' : '' %>" placeholder="Alamat pengerjaan default"><%= detail?.address || '' %></textarea>
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.address || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label class="label">
+          <span class="label-text">Avatar URL</span>
+        </label>
+
+        <input type="text" name="avatarUrl" value="<%= detail?.avatarUrl || '' %>" class="input input-bordered w-full <%= error?.message?.avatarUrl ? 'input-error' : '' %>" placeholder="https://example.com/avatar.jpg" />
+
+        <label class="label">
+          <span class="label-text-alt text-error">
+            <%= error?.message?.avatarUrl || '' %>
+          </span>
+        </label>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <%= isEdit ? 'Update Profile' : 'Create Profile' %>
+        </button>
+
+        <a href="/buyer/profile" class="btn btn-ghost">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

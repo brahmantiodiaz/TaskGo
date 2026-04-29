@@ -18,10 +18,45 @@
 
     <div class="flex-none">
       <ul class="menu menu-horizontal px-1">
-        <li><a href="/buyer">Dashboard</a></li>
-        <li><a href="#">Explore Services</a></li>
-        <li><a href="#">My Bookings</a></li>
-        <li><a href="/logout" class="text-error">Logout</a></li>
+        <li>
+          <a href="/buyer" class="<%= currentPath === '/buyer' ? 'active' : '' %>">
+            Dashboard
+          </a>
+        </li>
+
+        <li>
+          <a href="/buyer/profile" class="<%= currentPath.startsWith('/buyer/profile') ? 'active' : '' %>">
+            Profile
+          </a>
+        </li>
+
+        <li>
+          <a href="/buyer/services" class="<%= currentPath.startsWith('/buyer/services') ? 'active' : '' %>">
+            Explore Services
+          </a>
+        </li>
+
+        <li>
+          <a href="/buyer/bookings" class="<%= currentPath.startsWith('/buyer/bookings') ? 'active' : '' %>">
+            My Bookings
+          </a>
+        </li>
+
+        <li>
+          <a href="/buyer/invoices" class="<%= currentPath.startsWith('/buyer/invoices') ? 'active' : '' %>">
+            Invoices
+          </a>
+        </li>
+
+        <li>
+          <a href="/buyer/payments" class="<%= currentPath.startsWith('/buyer/payments') ? 'active' : '' %>">
+            Payments
+          </a>
+        </li>
+
+        <li>
+          <a href="/logout" class="text-error">Logout</a>
+        </li>
       </ul>
     </div>
   </div>

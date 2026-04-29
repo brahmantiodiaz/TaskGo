@@ -1,0 +1,119 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">My Invoices</h1>
+  <p class="text-base-content/60">
+    Daftar invoice dari booking kamu.
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow mb-6">
+  <div class="card-body">
+    <form action="/buyer/invoices" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <input type="text" name="search" value="<%= search || '' %>" class="input input-bordered md:col-span-2" placeholder="Search invoice number..." />
+
+      <select name="status" class="select select-bordered">
+        <option value="">All Status</option>
+
+        <% invoiceStatuses.forEach((invoiceStatus) => { %>
+        <option value="<%= invoiceStatus %>" <%= status === invoiceStatus ? 'selected' : '' %>>
+          <%= invoiceStatus %>
+        </option>
+        <% }) %>
+      </select>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary flex-1">Filter</button>
+        <a href="/buyer/invoices" class="btn btn-ghost">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Invoice</th>
+        <th>Booking</th>
+        <th>Service</th>
+        <th>Seller</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Payment</th>
+        <th class="text-right">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (invoices.length === 0) { %>
+      <tr>
+        <td colspan="9" class="text-center text-base-content/60 py-8">
+          No invoices found
+        </td>
+      </tr>
+      <% } %>
+
+      <% invoices.forEach((invoice, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+
+        <td>
+          <div class="font-bold"><%= invoice.invoiceNumber %></div>
+          <div class="text-sm text-base-content/60">
+            <%= invoice.issuedAt ? invoice.issuedAt.toLocaleDateString("id-ID") : '-' %>
+          </div>
+        </td>
+
+        <td><%= invoice.Booking?.bookingCode || '-' %></td>
+
+        <td>
+          <div><%= invoice.Booking?.SellerItem?.serviceTitle || '-' %></div>
+          <div class="text-sm text-base-content/60">
+            <%= invoice.Booking?.SellerItem?.Item?.name || '-' %>
+          </div>
+        </td>
+
+        <td>
+          <%= invoice.Booking?.SellerItem?.SellerProfile?.UserProfile?.fullName || '-' %>
+        </td>
+
+        <td>
+          Rp<%= new Intl.NumberFormat("id-ID").format(invoice.amount) %>
+        </td>
+
+        <td>
+          <% if (invoice.status === 'paid') { %>
+          <span class="badge badge-success">paid</span>
+          <% } else if (invoice.status === 'cancelled') { %>
+          <span class="badge badge-error">cancelled</span>
+          <% } else { %>
+          <span class="badge badge-warning">issued</span>
+          <% } %>
+        </td>
+
+        <td>
+          <% if (invoice.Payment) { %>
+          <span class="badge badge-outline"><%= invoice.Payment.paymentStatus %></span>
+          <% } else { %>
+          <span class="badge badge-ghost">no payment</span>
+          <% } %>
+        </td>
+
+        <td>
+          <div class="flex justify-end gap-2">
+            <a href="/buyer/invoices/<%= invoice.id %>" class="btn btn-info btn-xs">
+              Detail
+            </a>
+
+            <% if (invoice.status !== 'paid') { %>
+            <a href="/buyer/invoices/<%= invoice.id %>/pay" class="btn btn-primary btn-xs">
+              Pay
+            </a>
+            <% } %>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

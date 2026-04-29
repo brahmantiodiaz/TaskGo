@@ -1,0 +1,131 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Payment Detail</h1>
+  <p class="text-base-content/60">
+    Detail pembayaran kamu.
+  </p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Payment Information</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table">
+          <tr>
+            <th class="w-44">Amount</th>
+            <td>Rp<%= new Intl.NumberFormat("id-ID").format(payment.amount) %></td>
+          </tr>
+
+          <tr>
+            <th>Payment Method</th>
+            <td><%= payment.paymentMethod %></td>
+          </tr>
+
+          <tr>
+            <th>Status</th>
+            <td>
+              <% if (payment.paymentStatus === 'paid') { %>
+              <span class="badge badge-success">paid</span>
+              <% } else if (payment.paymentStatus === 'rejected') { %>
+              <span class="badge badge-error">rejected</span>
+              <% } else if (payment.paymentStatus === 'waiting_confirmation') { %>
+              <span class="badge badge-warning">waiting confirmation</span>
+              <% } else { %>
+              <span class="badge badge-ghost">unpaid</span>
+              <% } %>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Proof Payment</th>
+            <td>
+              <% if (payment.proofPaymentUrl) { %>
+              <a href="<%= payment.proofPaymentUrl %>" target="_blank" class="link link-primary">
+                Open Proof
+              </a>
+              <% } else { %>
+              -
+              <% } %>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Paid At</th>
+            <td><%= payment.paidAt ? payment.paidAt.toLocaleString("id-ID") : '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Confirmed At</th>
+            <td><%= payment.confirmedAt ? payment.confirmedAt.toLocaleString("id-ID") : '-' %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Invoice & Seller</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table">
+          <tr>
+            <th class="w-44">Invoice Number</th>
+            <td><%= payment.Invoice?.invoiceNumber || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Invoice Status</th>
+            <td><%= payment.Invoice?.status || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Booking Code</th>
+            <td><%= payment.Invoice?.Booking?.bookingCode || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Service</th>
+            <td><%= payment.Invoice?.Booking?.SellerItem?.serviceTitle || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Seller</th>
+            <td><%= payment.Invoice?.Booking?.SellerItem?.SellerProfile?.UserProfile?.fullName || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Bank Name</th>
+            <td><%= payment.Invoice?.Booking?.SellerItem?.SellerProfile?.bankName || '-' %></td>
+          </tr>
+
+          <tr>
+            <th>Bank Account</th>
+            <td><%= payment.Invoice?.Booking?.SellerItem?.SellerProfile?.bankAccountNumber || '-' %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card bg-base-100 shadow mt-6">
+  <div class="card-body">
+    <h2 class="card-title">Actions</h2>
+
+    <div class="flex flex-wrap gap-2">
+      <a href="/buyer/payments" class="btn btn-ghost">Back</a>
+
+      <a href="/buyer/invoices/<%= payment.Invoice?.id %>" class="btn btn-info">
+        View Invoice
+      </a>
+
+      <% if (payment.paymentStatus === 'rejected' || payment.paymentStatus === 'unpaid') { %>
+      <a href="/buyer/invoices/<%= payment.Invoice?.id %>/pay" class="btn btn-primary">
+        Resubmit Payment
+      </a>
+      <% } %>
+    </div>
+  </div>
+</div>

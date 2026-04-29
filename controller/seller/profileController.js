@@ -158,7 +158,7 @@ class SellerProfileController {
 
 	static async update(req, res) {
 		const t = await sequelize.transaction();
-
+		console.log(req.body);
 		try {
 			const sellerProfile = await getCurrentSellerProfile(req);
 

@@ -1,0 +1,111 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Payments</h1>
+  <p class="text-base-content/60">
+    Konfirmasi pembayaran dari buyer.
+  </p>
+</div>
+
+<div class="card bg-base-100 shadow mb-6">
+  <div class="card-body">
+    <form action="/seller/payments" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <select name="status" class="select select-bordered md:col-span-2">
+        <option value="">All Payment Status</option>
+        <% paymentStatuses.forEach((paymentStatus) => { %>
+        <option value="<%= paymentStatus %>" <%= status === paymentStatus ? 'selected' : '' %>>
+          <%= paymentStatus.replace("_"," ") %>
+        </option>
+        <% }) %>
+      </select>
+
+      <div class="flex gap-2">
+        <button type="submit" class="btn btn-primary flex-1">Filter</button>
+        <a href="/seller/payments" class="btn btn-ghost">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Invoice</th>
+        <th>Buyer</th>
+        <th>Amount</th>
+        <th>Method</th>
+        <th>Status</th>
+        <th>Proof</th>
+        <th class="text-right">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (payments.length === 0) { %>
+      <tr>
+        <td colspan="8" class="text-center text-base-content/60 py-8">
+          No payments found
+        </td>
+      </tr>
+      <% } %>
+
+      <% payments.forEach((payment, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+
+        <td>
+          <div class="font-bold"><%= payment.Invoice?.invoiceNumber || '-' %></div>
+          <div class="text-sm text-base-content/60">
+            <%= payment.Invoice?.Booking?.bookingCode || '-' %>
+          </div>
+        </td>
+
+        <td>
+          <div><%= payment.Invoice?.Booking?.buyer?.username || '-' %></div>
+          <div class="text-sm text-base-content/60">
+            <%= payment.Invoice?.Booking?.buyer?.email || '-' %>
+          </div>
+        </td>
+
+        <td>
+          Rp<%= new Intl.NumberFormat("id-ID").format(payment.amount) %>
+        </td>
+
+        <td>
+          <%= payment.paymentMethod %>
+        </td>
+
+        <td>
+          <% if (payment.paymentStatus === 'paid') { %>
+          <span class="badge badge-success">paid</span>
+          <% } else if (payment.paymentStatus === 'rejected') { %>
+          <span class="badge badge-error">rejected</span>
+          <% } else if (payment.paymentStatus === 'waiting_confirmation') { %>
+          <span class="badge badge-warning">waiting confirmation</span>
+          <% } else { %>
+          <span class="badge badge-ghost">unpaid</span>
+          <% } %>
+        </td>
+
+        <td>
+          <% if (payment.proofPaymentUrl) { %>
+          <a href="<%= payment.proofPaymentUrl %>" target="_blank" class="link link-primary">
+            Open
+          </a>
+          <% } else { %>
+          -
+          <% } %>
+        </td>
+
+        <td>
+          <div class="flex justify-end">
+            <a href="/seller/payments/<%= payment.id %>" class="btn btn-info btn-xs">
+              Detail
+            </a>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,110 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Submit Payment</h1>
+  <p class="text-base-content/60">
+    Upload link bukti pembayaran untuk invoice ini.
+  </p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="card bg-base-100 shadow lg:col-span-1">
+    <div class="card-body">
+      <h2 class="card-title">Invoice Summary</h2>
+
+      <div class="space-y-2">
+        <p>
+          <span class="font-semibold">Invoice:</span>
+          <%= invoice.invoiceNumber %>
+        </p>
+
+        <p>
+          <span class="font-semibold">Booking:</span>
+          <%= invoice.Booking?.bookingCode || '-' %>
+        </p>
+
+        <p>
+          <span class="font-semibold">Service:</span>
+          <%= invoice.Booking?.SellerItem?.serviceTitle || '-' %>
+        </p>
+
+        <p>
+          <span class="font-semibold">Seller:</span>
+          <%= invoice.Booking?.SellerItem?.SellerProfile?.UserProfile?.fullName || '-' %>
+        </p>
+
+        <div class="divider"></div>
+
+        <p>
+          <span class="font-semibold">Bank:</span>
+          <%= invoice.Booking?.SellerItem?.SellerProfile?.bankName || '-' %>
+        </p>
+
+        <p>
+          <span class="font-semibold">Account:</span>
+          <%= invoice.Booking?.SellerItem?.SellerProfile?.bankAccountNumber || '-' %>
+        </p>
+
+        <p class="font-bold text-primary text-xl">
+          Rp<%= new Intl.NumberFormat("id-ID").format(invoice.amount) %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow lg:col-span-2">
+    <div class="card-body">
+      <% if (error?.message?.global) { %>
+      <div class="alert alert-error mb-4">
+        <span><%= error.message.global %></span>
+      </div>
+      <% } %>
+
+      <form action="<%= action %>" method="POST" class="space-y-4">
+        <div>
+          <label class="label">
+            <span class="label-text">Payment Method</span>
+          </label>
+
+          <% const selectedMethod = detail?.paymentMethod || 'bank_transfer'; %>
+
+          <select name="paymentMethod" class="select select-bordered w-full <%= error?.message?.paymentMethod ? 'select-error' : '' %>">
+            <% paymentMethods.forEach((method) => { %>
+            <option value="<%= method %>" <%= selectedMethod === method ? 'selected' : '' %>>
+              <%= method %>
+            </option>
+            <% }) %>
+          </select>
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.paymentMethod || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Proof Payment URL</span>
+          </label>
+
+          <input type="text" name="proofPaymentUrl" value="<%= detail?.proofPaymentUrl || '' %>" class="input input-bordered w-full <%= error?.message?.proofPaymentUrl ? 'input-error' : '' %>" placeholder="https://example.com/payment-proof.jpg" />
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.proofPaymentUrl || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            Submit Payment
+          </button>
+
+          <a href="/buyer/invoices/<%= invoice.id %>" class="btn btn-ghost">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

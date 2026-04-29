@@ -38,6 +38,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
+	console.log();
 	res.locals.currentUser = req.session.user || null;
 	res.locals.currentPath = req.path;
 	res.locals.error = null;

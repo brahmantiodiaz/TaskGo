@@ -1,0 +1,98 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Buyer Dashboard</h1>
+  <p class="text-base-content/60">
+    Selamat datang, <%= buyerProfile?.fullName || currentUser?.username || currentUser?.email %>
+  </p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Total Bookings</div>
+      <div class="stat-value"><%= totalBookings %></div>
+      <div class="stat-desc">Semua booking kamu</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Pending</div>
+      <div class="stat-value"><%= pendingBookings %></div>
+      <div class="stat-desc">Menunggu approval seller</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Completed</div>
+      <div class="stat-value"><%= completedBookings %></div>
+      <div class="stat-desc">Booking selesai</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Invoices</div>
+      <div class="stat-value"><%= totalInvoices %></div>
+      <div class="stat-desc">Total invoice</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Unpaid Invoices</div>
+      <div class="stat-value"><%= unpaidInvoices %></div>
+      <div class="stat-desc">Perlu dibayar</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100">
+    <div class="stat">
+      <div class="stat-title">Waiting Payments</div>
+      <div class="stat-value"><%= waitingPayments %></div>
+      <div class="stat-desc">Menunggu konfirmasi seller</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-base-100 xl:col-span-2">
+    <div class="stat">
+      <div class="stat-title">Total Spending</div>
+      <div class="stat-value text-primary text-2xl">
+        Rp<%= new Intl.NumberFormat("id-ID").format(totalSpending) %>
+      </div>
+      <div class="stat-desc">Dari invoice paid</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Explore Services</h2>
+      <p>Cari layanan dari seller yang tersedia.</p>
+      <div class="card-actions justify-end">
+        <a href="/buyer/services" class="btn btn-primary btn-sm">Explore</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">My Bookings</h2>
+      <p>Lihat status booking yang sudah kamu buat.</p>
+      <div class="card-actions justify-end">
+        <a href="/buyer/bookings" class="btn btn-primary btn-sm">Open Bookings</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Invoices</h2>
+      <p>Lihat invoice dan lakukan pembayaran.</p>
+      <div class="card-actions justify-end">
+        <a href="/buyer/invoices" class="btn btn-primary btn-sm">Open Invoices</a>
+      </div>
+    </div>
+  </div>
+</div>

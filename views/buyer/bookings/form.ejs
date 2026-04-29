@@ -1,0 +1,105 @@
+<div class="mb-6">
+  <h1 class="text-3xl font-bold">Create Booking</h1>
+  <p class="text-base-content/60">
+    Lengkapi jadwal dan alamat pengerjaan.
+  </p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="card bg-base-100 shadow lg:col-span-1">
+    <div class="card-body">
+      <h2 class="card-title">Service Summary</h2>
+
+      <div class="space-y-2">
+        <p class="font-bold"><%= service.serviceTitle %></p>
+        <p class="text-sm text-base-content/60"><%= service.Item?.name || '-' %></p>
+
+        <div class="divider"></div>
+
+        <p>
+          <span class="font-semibold">Seller:</span>
+          <%= service.SellerProfile?.UserProfile?.fullName || '-' %>
+        </p>
+
+        <p>
+          <span class="font-semibold">Price:</span>
+          Rp<%= new Intl.NumberFormat("id-ID").format(service.price) %>
+        </p>
+
+        <p>
+          <span class="font-semibold">Duration:</span>
+          <%= service.duration %> minutes
+        </p>
+
+        <p>
+          <span class="font-semibold">Location:</span>
+          <%= service.location %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow lg:col-span-2">
+    <div class="card-body">
+      <% if (error?.message?.global) { %>
+      <div class="alert alert-error mb-4">
+        <span><%= error.message.global %></span>
+      </div>
+      <% } %>
+
+      <form action="<%= action %>" method="POST" class="space-y-4">
+        <div>
+          <label class="label">
+            <span class="label-text">Booking Date</span>
+          </label>
+
+          <input type="datetime-local" name="bookingDate" value="<%= detail?.bookingDate || '' %>" class="input input-bordered w-full <%= error?.message?.bookingDate ? 'input-error' : '' %>" />
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.bookingDate || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Address</span>
+          </label>
+
+          <textarea name="address" rows="4" class="textarea textarea-bordered w-full <%= error?.message?.address ? 'textarea-error' : '' %>" placeholder="Alamat pengerjaan"><%= detail?.address || '' %></textarea>
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.address || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text">Note</span>
+          </label>
+
+          <textarea name="note" rows="3" class="textarea textarea-bordered w-full <%= error?.message?.note ? 'textarea-error' : '' %>" placeholder="Catatan tambahan untuk seller"><%= detail?.note || '' %></textarea>
+
+          <label class="label">
+            <span class="label-text-alt text-error">
+              <%= error?.message?.note || '' %>
+            </span>
+          </label>
+        </div>
+
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            Submit Booking
+          </button>
+
+          <a href="/buyer/services/<%= service.id %>" class="btn btn-ghost">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

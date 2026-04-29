@@ -1,15 +1,16 @@
 <div class="mb-6">
-  <h1 class="text-3xl font-bold">Payments</h1>
+  <h1 class="text-3xl font-bold">My Payments</h1>
   <p class="text-base-content/60">
-    Konfirmasi pembayaran dari buyer.
+    Riwayat pembayaran yang sudah kamu submit.
   </p>
 </div>
 
 <div class="card bg-base-100 shadow mb-6">
   <div class="card-body">
-    <form action="/seller/payments" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <form action="/buyer/payments" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <select name="status" class="select select-bordered md:col-span-2">
         <option value="">All Payment Status</option>
+
         <% paymentStatuses.forEach((paymentStatus) => { %>
         <option value="<%= paymentStatus %>" <%= status === paymentStatus ? 'selected' : '' %>>
           <%= paymentStatus %>
@@ -19,7 +20,7 @@
 
       <div class="flex gap-2">
         <button type="submit" class="btn btn-primary flex-1">Filter</button>
-        <a href="/seller/payments" class="btn btn-ghost">Reset</a>
+        <a href="/buyer/payments" class="btn btn-ghost">Reset</a>
       </div>
     </form>
   </div>
@@ -31,11 +32,11 @@
       <tr>
         <th>No</th>
         <th>Invoice</th>
-        <th>Buyer</th>
+        <th>Service</th>
+        <th>Seller</th>
         <th>Amount</th>
         <th>Method</th>
         <th>Status</th>
-        <th>Proof</th>
         <th class="text-right">Action</th>
       </tr>
     </thead>
@@ -61,10 +62,11 @@
         </td>
 
         <td>
-          <div><%= payment.Invoice?.Booking?.buyer?.username || '-' %></div>
-          <div class="text-sm text-base-content/60">
-            <%= payment.Invoice?.Booking?.buyer?.email || '-' %>
-          </div>
+          <%= payment.Invoice?.Booking?.SellerItem?.serviceTitle || '-' %>
+        </td>
+
+        <td>
+          <%= payment.Invoice?.Booking?.SellerItem?.SellerProfile?.UserProfile?.fullName || '-' %>
         </td>
 
         <td>
@@ -88,18 +90,8 @@
         </td>
 
         <td>
-          <% if (payment.proofPaymentUrl) { %>
-          <a href="<%= payment.proofPaymentUrl %>" target="_blank" class="link link-primary">
-            Open
-          </a>
-          <% } else { %>
-          -
-          <% } %>
-        </td>
-
-        <td>
           <div class="flex justify-end">
-            <a href="/seller/payments/<%= payment.id %>" class="btn btn-info btn-xs">
+            <a href="/buyer/payments/<%= payment.id %>" class="btn btn-info btn-xs">
               Detail
             </a>
           </div>

@@ -1,0 +1,65 @@
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-3xl font-bold">Buyer Profile</h1>
+    <p class="text-base-content/60">
+      Informasi profil buyer.
+    </p>
+  </div>
+
+  <a href="/buyer/profile/edit" class="btn btn-primary">
+    Edit Profile
+  </a>
+</div>
+
+<div class="card bg-base-100 shadow max-w-4xl">
+  <div class="card-body">
+    <h2 class="card-title">Profile Information</h2>
+
+    <div class="overflow-x-auto">
+      <table class="table">
+        <tr>
+          <th class="w-44">Full Name</th>
+          <td><%= buyerProfile.fullName || '-' %></td>
+        </tr>
+
+        <tr>
+          <th>Email</th>
+          <td><%= buyerProfile.User?.email || '-' %></td>
+        </tr>
+
+        <tr>
+          <th>Phone Number</th>
+          <td><%= buyerProfile.phoneNumber || '-' %></td>
+        </tr>
+
+        <tr>
+          <th>Address</th>
+          <td><%= buyerProfile.address || '-' %></td>
+        </tr>
+
+        <tr>
+          <th>Avatar</th>
+          <td>
+            <% if (buyerProfile.avatarUrl) { %>
+            <a href="<%= buyerProfile.avatarUrl %>" target="_blank" class="link link-primary">
+              Open Avatar
+            </a>
+            <% } else { %>
+            -
+            <% } %>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Created At</th>
+          <td><%= buyerProfile.createdAt ? buyerProfile.createdAt.toLocaleString("id-ID") : '-' %></td>
+        </tr>
+
+        <tr>
+          <th>Updated At</th>
+          <td><%= buyerProfile.updatedAt ? buyerProfile.updatedAt.toLocaleString("id-ID") : '-' %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
