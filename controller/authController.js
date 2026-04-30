@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { User } = require("../models");
 const { UserRole } = require("../helpers/enums");
-const getValidationError = require("../helpers/helpers");
+const { getValidationError } = require("../helpers/helpers");
 const { Op } = require("sequelize");
 class AuthController {
 	static loginForm(req, res) {
