@@ -133,16 +133,6 @@ Mode development:
 npm run dev
 ```
 
-```js
-const AuthController = require("../controller/authController");
-```
-
-Selain itu, pastikan folder berikut tersedia agar upload file berjalan lancar:
-
-```txt
-public/uploads
-```
-
 ---
 
 ## Author

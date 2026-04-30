@@ -75,7 +75,25 @@ module.exports = (sequelize, DataTypes) => {
 
 			sellerItemId: requiredInteger(DataTypes, "Seller item"),
 
-			bookingDate: requiredDate(DataTypes, "Booking date"),
+			bookingDate: {
+				...requiredDate(DataTypes, "Booking date"),
+				validate: {
+					...requiredDate(DataTypes, "Booking date").validate,
+
+					minToday(value) {
+						if (!value) return;
+
+						const inputDate = new Date(value);
+
+						const today = new Date();
+						today.setHours(0, 0, 0, 0);
+
+						if (inputDate < today) {
+							throw new Error("Booking date cannot be earlier than today");
+						}
+					},
+				},
+			},
 
 			address: requiredText(DataTypes, "Address"),
 

@@ -54,6 +54,14 @@
     <div class="card-body">
       <h2 class="card-title">Seller Information</h2>
 
+      <div class="flex justify-center my-4">
+        <div class="avatar">
+          <div class="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <img src="<%= service.SellerProfile?.UserProfile?.avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(service.SellerProfile?.UserProfile?.fullName || 'Seller') + '&background=random&size=300' %>" alt="<%= service.SellerProfile?.UserProfile?.fullName || 'Seller' %>" />
+          </div>
+        </div>
+      </div>
+
       <div class="space-y-2">
         <p>
           <span class="font-semibold">Name:</span>

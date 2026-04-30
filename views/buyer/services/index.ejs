@@ -1,42 +1,23 @@
 <div class="mb-6">
   <h1 class="text-3xl font-bold">Explore Services</h1>
-  <p class="text-base-content/60">
-    Cari layanan dari seller yang tersedia.
-  </p>
+  <p class="text-base-content/60"> Cari layanan dari seller yang tersedia. </p>
 </div>
-
 <div class="card bg-base-100 shadow mb-6">
   <div class="card-body">
-    <form action="/buyer/services" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-3">
-      <input type="text" name="search" value="<%= search || '' %>" class="input input-bordered md:col-span-2" placeholder="Search service, description, or location..." />
-
-      <select name="itemId" class="select select-bordered">
-        <option value="">All Categories</option>
-
-        <% items.forEach((item) => { %>
-        <option value="<%= item.id %>" <%= Number(itemId) === Number(item.id) ? 'selected' : '' %>>
-          <%= item.name %>
-        </option>
-        <% }) %>
+    <form action="/buyer/services" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-3"> <input type="text" name="search" value="<%= search || '' %>" class="input input-bordered md:col-span-2" placeholder="Search service, description, or location..." /> <select name="itemId" class="select select-bordered">
+        <option value="">All Categories</option> <% items.forEach((item) => { %> <option value="<%= item.id %>" <%= Number(itemId) === Number(item.id) ? 'selected' : '' %>> <%= item.name %> </option> <% }) %>
       </select>
-
-      <div class="flex gap-2">
-        <button type="submit" class="btn btn-primary flex-1">Search</button>
-        <a href="/buyer/services" class="btn btn-ghost">Reset</a>
-      </div>
+      <div class="flex gap-2"> <button type="submit" class="btn btn-primary flex-1">Search</button> <a href="/buyer/services" class="btn btn-ghost">Reset</a> </div>
     </form>
   </div>
 </div>
-
-<% if (services.length === 0) { %>
-<div class="alert bg-base-100 shadow">
-  <span>No services found.</span>
-</div>
-<% } %>
-
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
   <% services.forEach((service) => { %>
-  <div class="card bg-base-100 shadow">
+  <div class="card bg-base-100 shadow overflow-hidden">
+    <figure class="h-48 bg-base-200">
+      <img src="<%= service.Item?.imageUrl || 'https://placehold.co/600x400?text=TaskGo+Service' %>" alt="<%= service.serviceTitle %>" class="w-full h-full object-cover" />
+    </figure>
+
     <div class="card-body">
       <div class="flex items-start justify-between gap-3">
         <div>

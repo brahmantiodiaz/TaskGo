@@ -1,65 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="business">
 
-<%- include('__head',{title}) %>
+<%- include('__head', { title }) %>
 
 <body class="bg-base-200 min-h-screen">
-  <div class="drawer lg:drawer-open">
-    <input id="admin-drawer" type="checkbox" class="drawer-toggle" />
+  <input id="admin-drawer" type="checkbox" class="peer hidden" checked />
 
-    <div class="drawer-content flex flex-col">
-      <div class="navbar bg-base-100 shadow-sm lg:hidden">
-        <div class="flex-none">
-          <label for="admin-drawer" class="btn btn-square btn-ghost">
-            ☰
-          </label>
+  <!-- Sidebar tanpa dark overlay -->
+  <aside class="
+      fixed top-0 left-0 z-50 h-screen w-72 bg-base-100 text-base-content shadow-md
+      transform -translate-x-full transition-transform duration-300
+      peer-checked:translate-x-0
+    ">
+    <div class="menu p-4 min-h-full">
+      <div class="flex items-start justify-between gap-3 mb-6">
+        <div>
+          <a href="/admin" class="text-2xl font-bold text-primary">
+            TaskGo Admin
+          </a>
+          <p class="text-sm text-base-content/60 mt-1">
+            Management Console
+          </p>
         </div>
-        <div class="flex-1 font-bold">Admin Panel</div>
+
+        <label for="admin-drawer" class="btn btn-sm btn-circle btn-ghost">
+          ✕
+        </label>
       </div>
 
-      <main class="p-6">
-        <%- body %>
-      </main>
+      <li class="menu-title">
+        <span>Main Menu</span>
+      </li>
+
+      <li>
+        <a href="/admin" class="<%= currentPath === '/admin' ? 'menu-active' : '' %>">
+          Dashboard
+        </a>
+      </li>
+
+      <li>
+        <a href="/admin/items" class="<%= currentPath.startsWith('/admin/items') ? 'menu-active' : '' %>">
+          Items
+        </a>
+      </li>
+
+      <li>
+        <a href="/admin/users" class="<%= currentPath.startsWith('/admin/users') ? 'menu-active' : '' %>">
+          Users
+        </a>
+      </li>
+
+      <li>
+        <a href="/admin/invoices" class="<%= currentPath.startsWith('/admin/invoices') ? 'menu-active' : '' %>">
+          Invoices
+        </a>
+      </li>
+
+      <div class="divider"></div>
+
+      <li>
+        <a href="/logout" class="text-error">
+          Logout
+        </a>
+      </li>
+    </div>
+  </aside>
+
+  <!-- Page Wrapper: desktop ikut geser kalau sidebar open -->
+  <div class="
+      min-h-screen transition-all duration-300
+      lg:peer-checked:ml-72
+    ">
+    <!-- Top Navbar -->
+    <div class="navbar bg-base-100 shadow-sm px-4 md:px-8 sticky top-0 z-30">
+      <div class="flex-none">
+        <label for="admin-drawer" class="btn btn-square btn-ghost">
+          ☰
+        </label>
+      </div>
+
+      <div class="flex-1 ml-2">
+        <div>
+          <h1 class="font-bold text-lg">Admin Panel</h1>
+          <p class="text-xs text-base-content/60 hidden md:block">
+            Manage TaskGo data and transactions
+          </p>
+        </div>
+      </div>
+
+      <!-- Avatar Dropdown -->
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src="<%= avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentProfile?.fullName || currentUser?.username || currentUser?.email || 'Admin') %>" alt="Admin Avatar" />
+            </div>
+          </div>
+
+          <ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-56 p-2 shadow">
+            <li class="px-3 py-2">
+              <div class="block p-0">
+                <p class="font-semibold">
+                  <%= currentProfile?.fullName || currentUser?.username || 'Admin' %>
+                </p>
+                <p class="text-xs text-base-content/60">
+                  <%= currentUser?.email || '-' %>
+                </p>
+              </div>
+            </li>
+
+            <div class="divider my-1"></div>
+
+            <li>
+              <a href="/admin/users/<%= currentUser?.id %>">
+                Profile
+              </a>
+            </li>
+
+            <li>
+              <a href="/logout" class="text-error">
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="drawer-side">
-      <label for="admin-drawer" class="drawer-overlay"></label>
-
-      <aside class="menu p-4 w-72 min-h-full bg-base-100 text-base-content">
-        <h1 class="text-2xl font-bold text-primary mb-6">TaskGo Admin</h1>
-
-        <li>
-          <a href="/admin" class="<%= currentPath === '/admin' ? 'menu-active' : '' %>">
-            Dashboard
-          </a>
-        </li>
-
-        <li>
-          <a href="/admin/items" class="<%= currentPath.startsWith('/admin/items') ? 'menu-active' : '' %>">
-            Items
-          </a>
-        </li>
-
-        <li>
-          <a href="/admin/users" class="<%= currentPath.startsWith('/admin/users') ? 'menu-active' : '' %>">
-            Users
-          </a>
-        </li>
-
-        <li>
-          <a href="/admin/invoices" class="<%= currentPath.startsWith('/admin/invoices') ? 'menu-active' : '' %>">
-            Invoices
-          </a>
-        </li>
-
-        <div class="divider"></div>
-
-        <li>
-          <a href="/logout" class="text-error">Logout</a>
-        </li>
-      </aside>
-    </div>
+    <!-- Page Content -->
+    <main class="p-4 md:p-6 max-w-7xl w-full mx-auto">
+      <%- body %>
+    </main>
   </div>
+
+  <script>
+    const drawer = document.getElementById("admin-drawer");
+
+    function setInitialDrawerState() {
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+      if (drawer) {
+        drawer.checked = isDesktop;
+      }
+    }
+
+    setInitialDrawerState();
+  </script>
 </body>
 
 </html>

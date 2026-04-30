@@ -1,76 +1,159 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="emerald">
 
-<%- include('__head',{title}) %>
+<%- include('__head', { title }) %>
 
 <body class="bg-base-200 min-h-screen">
-  <div class="drawer lg:drawer-open">
-    <input id="seller-drawer" type="checkbox" class="drawer-toggle" />
+  <input id="seller-drawer" type="checkbox" class="peer hidden" checked />
 
-    <div class="drawer-content flex flex-col">
-      <div class="navbar bg-base-100 shadow-sm lg:hidden">
-        <div class="flex-none">
-          <label for="seller-drawer" class="btn btn-square btn-ghost">
-            ☰
-          </label>
+  <!-- Sidebar -->
+  <aside class="
+      fixed top-0 left-0 z-50 h-screen w-72 bg-base-100 text-base-content shadow-md
+      transform -translate-x-full transition-transform duration-300
+      peer-checked:translate-x-0
+    ">
+    <div class="menu p-4 min-h-full">
+      <div class="flex items-start justify-between gap-3 mb-6">
+        <div>
+          <a href="/seller" class="text-2xl font-bold text-primary">
+            TaskGo Seller
+          </a>
+          <p class="text-sm text-base-content/60 mt-1">
+            Seller Workspace
+          </p>
         </div>
-        <div class="flex-1 font-bold">Seller Panel</div>
+
+        <!-- Close Button -->
+        <label for="seller-drawer" class="btn btn-sm btn-circle btn-ghost">
+          ✕
+        </label>
       </div>
 
-      <main class="p-6">
-        <%- body %>
-      </main>
+      <li class="menu-title">
+        <span>Main Menu</span>
+      </li>
+
+      <li>
+        <a href="/seller" class="<%= currentPath === '/seller' ? 'menu-active' : '' %>">
+          Dashboard
+        </a>
+      </li>
+
+      <li>
+        <a href="/seller/profile" class="<%= currentPath.startsWith('/seller/profile') ? 'menu-active' : '' %>">
+          Profile
+        </a>
+      </li>
+
+      <li>
+        <a href="/seller/services" class="<%= currentPath.startsWith('/seller/services') ? 'menu-active' : '' %>">
+          My Services
+        </a>
+      </li>
+
+      <li>
+        <a href="/seller/bookings" class="<%= currentPath.startsWith('/seller/bookings') ? 'menu-active' : '' %>">
+          Bookings
+        </a>
+      </li>
+
+      <li>
+        <a href="/seller/invoices" class="<%= currentPath.startsWith('/seller/invoices') ? 'menu-active' : '' %>">
+          Invoices
+        </a>
+      </li>
+
+      <li>
+        <a href="/seller/payments" class="<%= currentPath.startsWith('/seller/payments') ? 'menu-active' : '' %>">
+          Payments
+        </a>
+      </li>
+
+      <div class="divider"></div>
+
+      <li>
+        <a href="/logout" class="text-error">
+          Logout
+        </a>
+      </li>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="
+      min-h-screen transition-all duration-300
+      lg:peer-checked:ml-72
+    ">
+    <!-- Top Navbar -->
+    <div class="navbar bg-base-100 shadow-sm px-4 md:px-8 sticky top-0 z-30">
+      <div class="flex-none">
+        <label for="seller-drawer" class="btn btn-square btn-ghost">
+          ☰
+        </label>
+      </div>
+
+      <div class="flex-1 ml-2">
+        <div>
+          <h1 class="font-bold text-lg">Seller Panel</h1>
+          <p class="text-xs text-base-content/60 hidden md:block">
+            Manage your services, bookings, invoices, and payments
+          </p>
+        </div>
+      </div>
+
+      <!-- Avatar Dropdown -->
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src="<%= avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentProfile?.fullName || currentUser?.username || currentUser?.email || 'Seller') %>" alt="Seller Avatar" />
+            </div>
+          </div>
+
+          <ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-56 p-2 shadow">
+            <li class="px-3 py-2">
+              <div class="block p-0">
+                <p class="font-semibold">
+                  <%= currentProfile?.fullName || currentUser?.username || 'Seller' %>
+                </p>
+                <p class="text-xs text-base-content/60">
+                  <%= currentUser?.email || '-' %>
+                </p>
+              </div>
+            </li>
+
+            <div class="divider my-1"></div>
+
+            <li>
+              <a href="/seller/profile">Profile</a>
+            </li>
+
+            <li>
+              <a href="/logout" class="text-error">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="drawer-side">
-      <label for="seller-drawer" class="drawer-overlay"></label>
-
-      <aside class="menu p-4 w-72 min-h-full bg-base-100 text-base-content">
-        <h1 class="text-2xl font-bold text-primary mb-6">TaskGo Seller</h1>
-        <li>
-          <a href="/seller" class="<%= currentPath === '/seller' ? 'menu-active' : '' %>">
-            Dashboard
-          </a>
-        </li>
-
-        <li>
-          <a href="/seller/profile" class="<%= currentPath.startsWith('/seller/profile') ? 'menu-active' : '' %>">
-            Profile
-          </a>
-        </li>
-
-        <li>
-          <a href="/seller/services" class="<%= currentPath.startsWith('/seller/services') ? 'menu-active' : '' %>">
-            My Services
-          </a>
-        </li>
-
-        <li>
-          <a href="/seller/bookings" class="<%= currentPath.startsWith('/seller/bookings') ? 'menu-active' : '' %>">
-            Bookings
-          </a>
-        </li>
-
-        <li>
-          <a href="/seller/invoices" class="<%= currentPath.startsWith('/seller/invoices') ? 'menu-active' : '' %>">
-            Invoices
-          </a>
-        </li>
-
-        <li>
-          <a href="/seller/payments" class="<%= currentPath.startsWith('/seller/payments') ? 'menu-active' : '' %>">
-            Payments
-          </a>
-        </li>
-
-        <div class="divider"></div>
-
-        <li>
-          <a href="/logout" class="text-error">Logout</a>
-        </li>
-      </aside>
-    </div>
+    <!-- Page Content -->
+    <main class="p-4 md:p-6 max-w-7xl w-full mx-auto">
+      <%- body %>
+    </main>
   </div>
+
+  <script>
+    document.querySelectorAll("aside a").forEach((link) => {
+      link.addEventListener("click", () => {
+        const drawer = document.getElementById("seller-drawer");
+        const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+        if (drawer && !isDesktop) {
+          drawer.checked = false;
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
