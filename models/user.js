@@ -38,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
 					msg: "Email already exists",
 				},
 				validate: {
-					...requiredString(DataTypes, "Email").validate,
 					isEmail: {
 						msg: "Email format is invalid",
 					},
+					...requiredString(DataTypes, "Email").validate,
 				},
 			},
 

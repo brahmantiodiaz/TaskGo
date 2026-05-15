@@ -67,7 +67,6 @@ class AuthController {
 	static async register(req, res) {
 		try {
 			const { username, email, password } = req.body;
-
 			await User.create({
 				username,
 				email,
@@ -78,13 +77,12 @@ class AuthController {
 		} catch (error) {
 			if (error.name === "SequelizeValidationError") {
 				const customError = getValidationError(error);
-				console.log(customError);
 				res.render("auth/register", {
 					title: "Register",
 					error: customError,
 				});
 			}
-			console.log(error);
+			// console.log(error);
 		}
 	}
 
